@@ -1,5 +1,7 @@
 import {useState} from 'react';
 import './App.css';
+import axios from "axios";
+import {baseUrl} from "./main.tsx";
 
 const Spinner = () => (
     <svg
@@ -34,8 +36,11 @@ function App() {
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
     const [showQuestionBox, setShowQuestionBox] = useState(false);
     const [answer, setAnswer] = useState('');
+    const [question, setQuestion] = useState('');
+    const [feedback, setFeedback] = useState('');
+    const [questionId, setQuestionId] = useState(0);
     const [showResultBox, setShowResultBox] = useState(false);
-    const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+    const [isAnswer, setIsAnswer] = useState<boolean | null>(null);
     const [isLoading, setIsLoading] = useState<boolean | null>(null);
 
     const [isCheckLoading, setIsCheckLoading] = useState(false);
@@ -52,21 +57,23 @@ function App() {
     const handleSubmitCheck = async () => {
         setIsLoading(true)
         setIsCheckLoading(true);           // 로딩 시작
-        await new Promise((res) => setTimeout(res, 1000)); //Api 호출
+        const res = await axios.post(`${baseUrl}/api/v1/questions`, {"questionId": questionId, "answer": answer});
+        const data = res.data
+        setIsAnswer(data.isAnswer);
+        setFeedback(data.feedback);
+
         setIsCheckLoading(false);
         setIsLoading(false)
-
-        const normalized = answer.trim().replace(/\s+/g, '');
-        const correctNormalized = CORRECT_ANSWER.trim().replace(/\s+/g, '');
-        setIsCorrect(normalized.includes(correctNormalized));
-        setIsCorrect(true);
         setShowResultBox(true);
     };
 
     const handleGetQuestion = async () => {
         setIsLoading(true)
         setIsGetQuestionLoading(true);           // 로딩 시작
-        await new Promise((res) => setTimeout(res, 1000)); //Api 호출
+        const res = await axios.get(`${baseUrl}/api/v1/questions?tags=${selectedTags.join(',')}`);
+        const data = res.data
+        setQuestion(data.question);
+        setQuestionId(data.questionId);
         setIsGetQuestionLoading(false);
         setIsLoading(false)
 
@@ -78,7 +85,10 @@ function App() {
     const handleGetQuestionReLoad = async () => {
         setIsLoading(true)
         setIsGetQuestionReLoading(true);           // 로딩 시작
-        await new Promise((res) => setTimeout(res, 1000)); //Api 호출
+        const res = await axios.get(`${baseUrl}/api/v1/questions?tags=${selectedTags.join(',')}`);
+        const data = res.data
+        setQuestion(data.question);
+        setQuestionId(data.questionId);
         setIsGetQuestionReLoading(false);
         setIsLoading(false)
 
@@ -123,7 +133,7 @@ function App() {
             {showQuestionBox && (
                 <div className="w-full max-w-xl bg-gray-100 p-6 rounded-lg shadow mb-6">
                     <p className="text-base sm:text-lg font-semibold mb-4">
-                        문제: 백엔드에서 API의 역할은 무엇인가요?
+                        문제: {question}
                     </p>
 
                     <textarea
@@ -136,13 +146,13 @@ function App() {
                     {showResultBox && (
                         <div className="mt-6 mb-4 bg-white border border-gray-300 rounded p-4 shadow-sm">
                             <p className="mb-2 font-semibold">
-                                <span className={isCorrect ? 'text-blue-600' : 'text-red-600'}>
-                                    {isCorrect ? '정답 !' : '오답 !'}
+                                <span className={isAnswer ? 'text-blue-600' : 'text-red-600'}>
+                                    {isAnswer ? '정답 !' : '오답 !'}
                                  </span>
                             </p>
-                            <p className="text-sm sm:text-base text-gray-700">
+                            <p className="text-sm sm:text-base text-gray-700 whitespace-pre-line">
                                 <span className="font-semibold"> - 정답 해설 - </span>
-                                <p>{EXPLANATION}</p>
+                                <p>{feedback}</p>
                             </p>
                         </div>
                     )}
@@ -167,7 +177,7 @@ function App() {
                         <button
                             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition disabled:opacity-50 flex items-center justify-center"
                             onClick={handleSubmitCheck}
-                            disabled={isLoading || isCheckLoading}
+                            disabled={isLoading || isCheckLoading || answer.trim().length < 10}
                         >
                             {isCheckLoading ? (
                                 <>
