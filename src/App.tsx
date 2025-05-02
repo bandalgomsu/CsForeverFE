@@ -40,8 +40,10 @@ function App() {
     const [feedback, setFeedback] = useState('');
     const [questionId, setQuestionId] = useState(0);
     const [showResultBox, setShowResultBox] = useState(false);
+
     const [isAnswer, setIsAnswer] = useState<boolean | null>(null);
     const [isLoading, setIsLoading] = useState<boolean | null>(null);
+    const [error, setError] = useState<String | null>(null);
 
     const [isCheckLoading, setIsCheckLoading] = useState(false);
 
@@ -57,44 +59,67 @@ function App() {
     const handleSubmitCheck = async () => {
         setIsLoading(true)
         setIsCheckLoading(true);           // 로딩 시작
-        const res = await axios.post(`${baseUrl}/api/v1/questions`, {"questionId": questionId, "answer": answer});
-        const data = res.data
-        setIsAnswer(data.isAnswer);
-        setFeedback(data.feedback);
 
-        setIsCheckLoading(false);
-        setIsLoading(false)
-        setShowResultBox(true);
+        try {
+            const res = await axios.post(`${baseUrl}/api/v1/questions`, {"questionId": questionId, "answer": answer});
+            const data = res.data
+            setIsAnswer(data.isAnswer);
+            setFeedback(data.feedback);
+
+            setError("")
+            setShowQuestionBox(true);
+            setShowResultBox(false);
+            setAnswer('');
+        } catch (error) {
+            setError('정답을 채점하던 중 오류가 발생했습니다. 잠시 후 다시 시도 해주세요.');
+        } finally {
+            setIsCheckLoading(false);
+            setIsLoading(false)
+        }
     };
 
     const handleGetQuestion = async () => {
         setIsLoading(true)
-        setIsGetQuestionLoading(true);           // 로딩 시작
-        const res = await axios.get(`${baseUrl}/api/v1/questions?tags=${selectedTags.join(',')}`);
-        const data = res.data
-        setQuestion(data.question);
-        setQuestionId(data.questionId);
-        setIsGetQuestionLoading(false);
-        setIsLoading(false)
+        setIsGetQuestionLoading(true);// 로딩 시작
 
-        setShowQuestionBox(true);
-        setShowResultBox(false);
-        setAnswer('');
+        try {
+            const res = await axios.get(`${baseUrl}/api/v1/questions?tags=${selectedTags.join(',')}`);
+            const data = res.data
+            setQuestion(data.question);
+            setQuestionId(data.questionId);
+
+            setError("")
+            setShowQuestionBox(true);
+            setShowResultBox(false);
+            setAnswer('');
+        } catch (error) {
+            setError('문제를 불러오는 중 오류가 발생했습니다. 잠시 후 다시 시도 해주세요.');
+        } finally {
+            setIsGetQuestionLoading(false);
+            setIsLoading(false)
+        }
     };
 
     const handleGetQuestionReLoad = async () => {
         setIsLoading(true)
-        setIsGetQuestionReLoading(true);           // 로딩 시작
-        const res = await axios.get(`${baseUrl}/api/v1/questions?tags=${selectedTags.join(',')}`);
-        const data = res.data
-        setQuestion(data.question);
-        setQuestionId(data.questionId);
-        setIsGetQuestionReLoading(false);
-        setIsLoading(false)
+        setIsGetQuestionReLoading(true);// 로딩 시작
 
-        setShowQuestionBox(true);
-        setShowResultBox(false);
-        setAnswer('');
+        try {
+            const res = await axios.get(`${baseUrl}/api/v1/questions?tags=${selectedTags.join(',')}`);
+            const data = res.data
+            setQuestion(data.question);
+            setQuestionId(data.questionId);
+
+            setError("")
+            setShowQuestionBox(true);
+            setShowResultBox(false);
+            setAnswer('');
+        } catch (error) {
+            setError('문제를 불러오는 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+        } finally {
+            setIsGetQuestionReLoading(false);
+            setIsLoading(false)
+        }
     };
 
     return (
@@ -209,6 +234,8 @@ function App() {
                     '문제 풀기'
                 )}
             </button>
+
+            <p className="text-center text-red-600 text-xl font-bold">{error}</p>
         </div>
     );
 }
