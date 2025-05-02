@@ -193,7 +193,7 @@ function App() {
                         <button
                             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition disabled:opacity-50 flex items-center justify-center"
                             onClick={handleGetQuestionReLoad}
-                            disabled={isLoading || isGetQuestionReLoading}
+                            disabled={isLoading || isGetQuestionReLoading || selectedTags.length == 0}
                         >
                             {isGetQuestionReLoading ? (
                                 <>
@@ -230,7 +230,7 @@ function App() {
                 onClick={async () => {
                     await handleGetQuestion();
                 }}
-                disabled={isLoading || isGetQuestionLoading}
+                disabled={isLoading || isGetQuestionLoading || selectedTags.length == 0}
             >
                 {isGetQuestionLoading ? (
                     <>
