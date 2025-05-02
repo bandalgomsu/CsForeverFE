@@ -62,8 +62,8 @@ function App() {
 
         try {
             const res = await axios.post(`${baseUrl}/api/v1/questions`, {
-                "questionId": encodeURIComponent(questionId),
-                "answer": encodeURIComponent(answer)
+                "questionId": questionId,
+                "answer": answer
             });
             const data = res.data
             setIsAnswer(data.isAnswer);
