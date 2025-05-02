@@ -138,20 +138,27 @@ function App() {
                         <button
                             key={tag}
                             onClick={() => toggleTag(tag)}
-                            className={`group w-full h-10 px-2 rounded-full border transition
-                            flex items-center justify-center
+                            className={`
+                            group min-w-0 w-full h-10 px-2 relative
+                            flex items-center justify-center bg-transparent rounded-none
+                            after:content-[''] after:absolute after:left-0 after:right-0 after:bottom-1
+                            after:h-[2px] after:rounded-full
                             ${isSelected
-                                ? 'bg-blue-500 text-white border-blue-500'
-                                : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'}`}
+                                ? 'after:bg-blue-600'
+                                : 'after:bg-gray-300 group-hover:after:bg-gray-400'}
+                            `}
                         >
-                          <span
-                              className="text-[10px] sm:text-xs md:text-sm whitespace-nowrap
-                              overflow-x-hidden group-hover:overflow-x-auto
-                              max-w-full text-center px-1"
-                          >
-                             {tag}
-                          </span>
+                            <span
+                                className={`
+                                    text-[9px] sm:text-[10px] md:text-xs lg:text-sm
+                                    text-center font-bold break-words leading-tight px-1
+                                    ${isSelected ? 'text-blue-600' : 'text-gray-700'}
+                                `}
+                            >
+                                {tag}
+                            </span>
                         </button>
+
                     );
                 })}
             </div>
