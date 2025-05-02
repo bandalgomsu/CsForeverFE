@@ -28,10 +28,6 @@ const Spinner = () => (
 
 const TAGS = ['Spring', 'NodeJS', "ASP.Net", 'React', 'DB', "Java", "C#", "JavaScript", 'OS', 'Algorithm', 'Data Structure', 'Network', "Design Pattern", "SW Engineering", "DevOps",];
 
-// 샘플 정답 및 해설
-const CORRECT_ANSWER = '서로 다른 시스템 간 통신을 가능하게 한다';
-const EXPLANATION = 'API는 프론트엔드와 백엔드, 혹은 시스템 간 데이터를 주고받을 수 있도록 하는 인터페이스입니다.';
-
 function App() {
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
     const [showQuestionBox, setShowQuestionBox] = useState(false);
