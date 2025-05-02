@@ -68,8 +68,7 @@ function App() {
 
             setError("")
             setShowQuestionBox(true);
-            setShowResultBox(false);
-            setAnswer('');
+            setShowResultBox(true);
         } catch (error) {
             setError('정답을 채점하던 중 오류가 발생했습니다. 잠시 후 다시 시도 해주세요.');
         } finally {
