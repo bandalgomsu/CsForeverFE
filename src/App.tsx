@@ -61,7 +61,10 @@ function App() {
         setIsCheckLoading(true);           // 로딩 시작
 
         try {
-            const res = await axios.post(`${baseUrl}/api/v1/questions`, {"questionId": questionId, "answer": answer});
+            const res = await axios.post(`${baseUrl}/api/v1/questions`, {
+                "questionId": encodeURIComponent(questionId),
+                "answer": encodeURIComponent(answer)
+            });
             const data = res.data
             setIsAnswer(data.isAnswer);
             setFeedback(data.feedback);
@@ -82,7 +85,8 @@ function App() {
         setIsGetQuestionLoading(true);// 로딩 시작
 
         try {
-            const res = await axios.get(`${baseUrl}/api/v1/questions?tags=${selectedTags.join(',')}`);
+            const tags = selectedTags.map(tag => encodeURIComponent(tag));
+            const res = await axios.get(`${baseUrl}/api/v1/questions?tags=${tags.join(',')}`);
             const data = res.data
             setQuestion(data.question);
             setQuestionId(data.questionId);
@@ -104,7 +108,8 @@ function App() {
         setIsGetQuestionReLoading(true);// 로딩 시작
 
         try {
-            const res = await axios.get(`${baseUrl}/api/v1/questions?tags=${selectedTags.join(',')}`);
+            const tags = selectedTags.map(tag => encodeURIComponent(tag));
+            const res = await axios.get(`${baseUrl}/api/v1/questions?tags=${tags.join(',')}`);
             const data = res.data
             setQuestion(data.question);
             setQuestionId(data.questionId);
