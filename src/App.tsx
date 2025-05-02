@@ -139,7 +139,7 @@ function App() {
                     <textarea
                         value={answer}
                         onChange={(e) => setAnswer(e.target.value)}
-                        placeholder="정답을 입력하세요..."
+                        placeholder="정답을 입력하세요... (최소 10글자)"
                         className="w-full h-32 p-3 border border-gray-300 rounded mb-4 resize-none focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
                     />
 
@@ -188,7 +188,6 @@ function App() {
                                 '정답 제출'
                             )}
                         </button>
-
                     </div>
                 </div>
             )}
