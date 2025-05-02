@@ -142,16 +142,19 @@ function App() {
                         <button
                             key={tag}
                             onClick={() => toggleTag(tag)}
-                            className={`w-full min-w-0 px-2 py-1 sm:px-3 sm:py-2 rounded-full border transition
-                    flex justify-center items-center
-                    ${isSelected
+                            className={`group w-full h-10 px-2 rounded-full border transition
+                            flex items-center justify-center
+                            ${isSelected
                                 ? 'bg-blue-500 text-white border-blue-500'
                                 : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'}`}
                         >
-                <span className="text-[10px] sm:text-xs md:text-sm text-center leading-tight break-keep">
-                    {tag}
-                </span>
-
+                          <span
+                              className="text-[10px] sm:text-xs md:text-sm whitespace-nowrap
+                              overflow-x-hidden group-hover:overflow-x-auto
+                              max-w-full text-center px-1"
+                          >
+                             {tag}
+                          </span>
                         </button>
                     );
                 })}
