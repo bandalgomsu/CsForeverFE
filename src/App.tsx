@@ -2,6 +2,7 @@ import {useState} from 'react';
 import './App.css';
 import axios from "axios";
 import {baseUrl} from "./main.tsx";
+import {TagToEnumMap} from "./utill/QuestionTagUtill.tsx";
 
 const Spinner = () => (
     <svg
@@ -26,7 +27,7 @@ const Spinner = () => (
     </svg>
 );
 
-const TAGS = ['Spring', 'NodeJS', "ASP.Net", 'React', 'DB', "Java", "C#", "JavaScript", 'OS', 'Algorithm', 'Data Structure', 'Network', "Design Pattern", "SW Engineering", "DevOps",];
+const TAGS = ['Spring', 'NodeJS', "ASP.Net", 'React', 'RDB', 'NoSql', "Java", "C#", "JavaScript", 'OS', 'Algorithm', 'Data Structure', 'Network', "Design Pattern", "SW Engineering", "DevOps",];
 
 function App() {
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
@@ -81,7 +82,7 @@ function App() {
         setIsGetQuestionLoading(true);// 로딩 시작
 
         try {
-            const tags = selectedTags.map(tag => encodeURIComponent(tag));
+            const tags = selectedTags.map(tag => encodeURIComponent(TagToEnumMap[tag]));
             const res = await axios.get(`${baseUrl}/api/v1/questions?tags=${tags.join(',')}`);
             const data = res.data
             setQuestion(data.question);
@@ -104,7 +105,7 @@ function App() {
         setIsGetQuestionReLoading(true);// 로딩 시작
 
         try {
-            const tags = selectedTags.map(tag => encodeURIComponent(tag));
+            const tags = selectedTags.map(tag => encodeURIComponent(TagToEnumMap[tag]));
             const res = await axios.get(`${baseUrl}/api/v1/questions?tags=${tags.join(',')}`);
             const data = res.data
             setQuestion(data.question);
