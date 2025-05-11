@@ -2,6 +2,7 @@ import {useLocation, useNavigate} from 'react-router-dom';
 import {useEffect} from "react";
 import {ArrowLeft} from "lucide-react";
 
+
 export default function ProfileSubmissionDetail() {
     const navigate = useNavigate();
     const location = useLocation();
@@ -94,8 +95,6 @@ export default function ProfileSubmissionDetail() {
                 </div>
 
             </div>
-
-            {error && <p className="text-red-600 text-sm mt-4 text-center">{error}</p>}
         </div>
     );
 }

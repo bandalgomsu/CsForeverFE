@@ -3,6 +3,15 @@ import {useEffect, useState} from "react";
 import api from "../axios/Axios.tsx";
 import {ArrowLeft, ArrowRight} from "lucide-react";
 
+export interface Submission {
+    submissionId: number;
+    question: string;
+    tag: string;
+    answer: string;
+    feedback: string;
+    isCorrect: boolean;
+}
+
 export default function ProfileSubmission() {
     const navigate = useNavigate();
     const location = useLocation();
@@ -10,7 +19,7 @@ export default function ProfileSubmission() {
     const isCorrect = location.state?.isCorrect ?? true;
 
     const [currentPage, setCurrentPage] = useState(location.state?.currentPage ?? 1);
-    const [page, setPage] = useState([]);
+    const [page, setPage] = useState<Submission[]>([]);
     const [totalPages, setTotalPages] = useState(1);
     const pageSize = 5;
 
@@ -102,20 +111,20 @@ export default function ProfileSubmission() {
                                                     tag: data.tag,
                                                     answer: data.answer,
                                                     feedback: data.feedback,
-                                                    isCorrect: isCorrect,
+                                                    isCorrect: data.isCorrect,
                                                     currentPage: currentPage,
                                                 },
                                             })
                                         }
                                         className="text-black font-bold truncate block max-w-full cursor-pointer hover:underline"
                                     >
-                  <span
-                      className={`font-bold ${
-                          isCorrect ? 'text-blue-500' : 'text-red-500'
-                      }`}
-                  >
-                    [{data.tag}]
-                  </span>{" "}
+                                <span
+                                    className={`font-bold ${
+                                        isCorrect ? 'text-blue-500' : 'text-red-500'
+                                    }`}
+                                >
+                                    [{data.tag}]
+                                </span>{" "}
                                         - {data.question}
                                     </p>
                                     <br/>
