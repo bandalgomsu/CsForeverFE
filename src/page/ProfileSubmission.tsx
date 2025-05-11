@@ -3,17 +3,6 @@ import {useEffect, useState} from "react";
 import api from "../axios/Axios.tsx";
 import {ArrowLeft, ArrowRight} from "lucide-react";
 
-const DUMMY = [
-    {
-        "tag": "Spring",
-        "question": "1스프링 부트에서 @Autowired 어노테이션의 역할은 ㅂㅂㄹㅈㅂㄹㅂㅈㄹㅂㅈㄹ무엇인가요?",
-        "isCorrect": true,
-        "submissionId": 1,
-        "answer": "띠리리리링띠리리리링띠리리리링띠리리리링띠리리리링띠리리리링띠리리리링띠리리리링띠리리띠리띠리리리링띠리리리링리리링띠리리리링띠리리리링띠리리리링띠리리리링띠리리리링리링띠리리리링띠리리리링띠리리리링",
-        "feedback": "피드백백띠리리리링띠리리리링띠리리리링띠리리리링띠리리리링띠리리리링띠리리리링띠리리띠리리리링띠리리리링띠리리리링리링띠리리리링띠리리리링띠리리리링띠리리리링띠리리리링띠리리리링띠리리리링띠리리리링띠리리리링띠리리리링!"
-    },
-]
-
 export default function ProfileSubmission() {
     const navigate = useNavigate();
     const location = useLocation();

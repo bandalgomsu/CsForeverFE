@@ -1,17 +1,6 @@
 import {useLocation, useNavigate} from 'react-router-dom';
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {ArrowLeft} from "lucide-react";
-
-const DUMMY = [
-    {
-        "tag": "Spring",
-        "question": "1스프링 부트에서 @Autowired 어노테이션의 역할은 ㅂㅂㄹㅈㅂㄹㅂㅈㄹㅂㅈㄹ무엇인가요?",
-        "isCorrect": true,
-        "submissionId": 1,
-        "answer": "띠리리리링",
-        "feedback": "피드백백!"
-    },
-]
 
 export default function ProfileSubmissionDetail() {
     const navigate = useNavigate();
@@ -23,8 +12,6 @@ export default function ProfileSubmissionDetail() {
     const answer = location.state?.answer ?? null;
     const feedback = location.state?.feedback ?? null;
     const isCorrect = location.state?.isCorrect ?? null;
-
-    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         const token = localStorage.getItem('token');

@@ -65,7 +65,7 @@ export default function Signup() {
     const handleVerifyCode = async () => {
         try {
             setIsVerifying(true);
-            const response = await api.post(`/api/v1/auth/mail/verify`,
+            await api.post(`/api/v1/auth/mail/verify`,
                 {
                     "email": email,
                     "code": verificationCode
