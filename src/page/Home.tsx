@@ -1,35 +1,14 @@
 import {useState} from 'react';
-import './App.css';
-import axios from "axios";
-import {baseUrl} from "./main.tsx";
-import {TagToEnumMap} from "./utill/QuestionTagUtill.tsx";
-
-const Spinner = () => (
-    <svg
-        className="animate-spin h-5 w-5 text-white mr-2"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-    >
-        <circle
-            className="opacity-25"
-            cx="12"
-            cy="12"
-            r="10"
-            stroke="currentColor"
-            strokeWidth="4"
-        />
-        <path
-            className="opacity-75"
-            fill="currentColor"
-            d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-        />
-    </svg>
-);
+import {TagToEnumMap} from "../utill/MapUtill.tsx";
+import {Spinner} from "../utill/Spinner.tsx";
+import {useNavigate} from "react-router-dom";
+import api from "../axios/Axios.tsx";
 
 const TAGS = ['Spring', 'NodeJS', "ASP.Net", 'React', 'RDB', 'NoSql', "Java", "C#", "JavaScript", 'OS', 'Algorithm', 'Data Structure', 'Network', "Design Pattern", "SW Engineering", "DevOps",];
 
-function App() {
+export function Home() {
+    const navigate = useNavigate();
+
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
     const [showQuestionBox, setShowQuestionBox] = useState(false);
     const [answer, setAnswer] = useState('');
@@ -38,7 +17,7 @@ function App() {
     const [questionId, setQuestionId] = useState(0);
     const [showResultBox, setShowResultBox] = useState(false);
 
-    const [isAnswer, setIsAnswer] = useState<boolean | null>(null);
+    const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
     const [isLoading, setIsLoading] = useState<boolean | null>(null);
     const [error, setError] = useState<String | null>(null);
 
@@ -58,12 +37,14 @@ function App() {
         setIsCheckLoading(true);           // 로딩 시작
 
         try {
-            const res = await axios.post(`${baseUrl}/api/v1/questions`, {
-                "questionId": questionId,
-                "answer": answer
-            });
+            const res = await api.post(`/api/v1/questions`, {
+                    "questionId": questionId,
+                    "answer": answer
+                }
+            )
+
             const data = res.data
-            setIsAnswer(data.isAnswer);
+            setIsCorrect(data.isCorrect);
             setFeedback(data.feedback);
 
             setError("")
@@ -83,7 +64,7 @@ function App() {
 
         try {
             const tags = selectedTags.map(tag => encodeURIComponent(TagToEnumMap[tag]));
-            const res = await axios.get(`${baseUrl}/api/v1/questions?tags=${tags.join(',')}`);
+            const res = await api.get(`/api/v1/questions?tags=${tags.join(',')}`);
             const data = res.data
             setQuestion(data.question);
             setQuestionId(data.questionId);
@@ -106,7 +87,7 @@ function App() {
 
         try {
             const tags = selectedTags.map(tag => encodeURIComponent(TagToEnumMap[tag]));
-            const res = await axios.get(`${baseUrl}/api/v1/questions?tags=${tags.join(',')}`);
+            const res = await api.get(`/api/v1/questions?tags=${tags.join(',')}`)
             const data = res.data
             setQuestion(data.question);
             setQuestionId(data.questionId);
@@ -124,12 +105,17 @@ function App() {
     };
 
     return (
-        <div className="bg-white text-gray-900 flex flex-col min-h-screen justify-center items-center px-4
-                scale-105 sm:scale-110 transition-transform origin-top">
+        <div
+            className="bg-white text-gray-900 flex flex-col min-h-screen justify-start items-center pt-16 px-4 scale-105 sm:scale-110 transition-transform origin-top">
+
             {/* 로고 */}
-            <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-8 text-blue-600 text-center">
+            <h1
+                className="text-3xl sm:text-4xl md:text-6xl font-bold mb-8 text-blue-600 text-center cursor-pointer"
+                onClick={() => navigate("/")}
+            >
                 CS <span className="text-blue-500">Forever</span>
             </h1>
+
 
             {/* 태그 선택 */}
             <div className="grid grid-cols-5 gap-3 mb-8 w-full max-w-xl">
@@ -175,15 +161,15 @@ function App() {
                     <textarea
                         value={answer}
                         onChange={(e) => setAnswer(e.target.value)}
-                        placeholder="정답을 입력하세요... (최소 10글자)"
+                        placeholder="정답을 입력하세요... (최소 10글자 / 최대 300글자)"
                         className="w-full h-32 p-3 border border-gray-300 rounded mb-4 resize-none focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
                     />
 
                     {showResultBox && (
                         <div className="mt-6 mb-4 bg-white border border-gray-300 rounded p-4 shadow-sm">
                             <p className="mb-2 font-semibold">
-                                <span className={isAnswer ? 'text-blue-600' : 'text-red-600'}>
-                                    {isAnswer ? '정답 !' : '오답 !'}
+                                <span className={isCorrect ? 'text-blue-600' : 'text-red-600'}>
+                                    {isCorrect ? '정답 !' : '오답 !'}
                                  </span>
                             </p>
                             <p className="text-sm sm:text-base text-gray-700 whitespace-pre-line">
@@ -251,4 +237,4 @@ function App() {
     );
 }
 
-export default App;
+export default Home;
