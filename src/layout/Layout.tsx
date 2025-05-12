@@ -21,7 +21,7 @@ export default function Layout() {
 
     async function handleLogout() {
         try {
-            const response = await api.delete("/api/v1/auth/logout")
+            await api.delete("/api/v1/auth/logout")
             localStorage.removeItem("token");
             setIsLoggedIn(false);
             alert("로그아웃에 성공했습니다.")
