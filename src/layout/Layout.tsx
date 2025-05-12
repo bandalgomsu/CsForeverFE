@@ -1,5 +1,6 @@
 import {Outlet, useNavigate} from 'react-router-dom';
 import {useEffect, useState} from 'react';
+import api from "../axios/Axios.tsx";
 
 export default function Layout() {
     const navigate = useNavigate();
@@ -8,7 +9,7 @@ export default function Layout() {
     useEffect(() => {
         const token = localStorage.getItem('token');
         setIsLoggedIn(!!token);
-    }, [location.pathname]); // 경로가 바뀔 때마다 토큰 다시 확인
+    }, [location.pathname, isLoggedIn]); // 경로가 바뀔 때마다 토큰 다시 확인
 
     const handleClick = () => {
         if (isLoggedIn) {
@@ -17,6 +18,20 @@ export default function Layout() {
             navigate('/login');
         }
     };
+
+    async function handleLogout() {
+        try {
+            const response = await api.delete("/api/v1/auth/logout")
+            localStorage.removeItem("token");
+            setIsLoggedIn(false);
+            alert("로그아웃에 성공했습니다.")
+        } catch (e) {
+            console.error(e)
+            alert("로그아웃에 실패했습니다. 잠시 후 다시 시도해주세요.")
+        }
+
+
+    }
 
     return (
         <div className="min-h-screen flex flex-col">
@@ -35,10 +50,20 @@ export default function Layout() {
                 <Outlet/>
             </main>
 
+            <br></br>
             {/* 푸터 */}
-            <footer className="flex justify-center text-center text-sm text-gray-600 py-4">
-                Contact : <a href="mailto:rhtn1128@gmail.com" className="underline">rhtn1128@gmail.com</a>
+            <footer className="text-center text-sm text-gray-600 py-4">
+                <div>
+                    Contact : <a href="mailto:rhtn1128@gmail.com" className="underline">rhtn1128@gmail.com</a>
+                </div>
+                {isLoggedIn && (
+                    <div
+                        onClick={() => handleLogout()}
+                        className="mt-2 hover:underline cursor-pointer"
+                    >로그아웃</div>
+                )}
             </footer>
+
         </div>
     );
 }
