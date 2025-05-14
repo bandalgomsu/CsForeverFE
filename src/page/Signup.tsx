@@ -242,6 +242,7 @@ export default function Signup() {
                     className="w-full p-3 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
                 >
                     <option value="">선택하세요</option>
+                    <option value="0">0년차</option>
                     <option value="1">1년차</option>
                     <option value="2">2년차</option>
                     <option value="3">3년차</option>
