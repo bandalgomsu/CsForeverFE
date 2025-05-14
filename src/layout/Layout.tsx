@@ -54,7 +54,7 @@ export default function Layout() {
             {/* 푸터 */}
             <footer className="text-center text-sm text-gray-600 py-4">
                 <div>
-                    Contact : <a href="mailto:rhtn1128@gmail.com" className="underline">rhtn1128@gmail.com</a>
+                    Contact : <a href="mailto:maildevgogo@gmail.com" className="underline">maildevgogo@gmail.com</a>
                 </div>
                 {isLoggedIn && (
                     <div
