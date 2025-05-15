@@ -25,6 +25,7 @@ export default function Layout() {
             localStorage.removeItem("token");
             setIsLoggedIn(false);
             alert("로그아웃에 성공했습니다.")
+            navigate('/');
         } catch (e) {
             console.error(e)
             alert("로그아웃에 실패했습니다. 잠시 후 다시 시도해주세요.")
