@@ -28,7 +28,7 @@ export default function Profile() {
         try {
             setIsLoading(true);
             const res = await api.get(`/api/v1/user/profile`);
-            const {email, nickname, correctSubmissionCount, position, career} = res.data;
+            const {nickname, correctSubmissionCount, position, career} = res.data;
             // setEmail(email);
             setNickname(nickname);
             setCorrectSubmissionCount(correctSubmissionCount)
