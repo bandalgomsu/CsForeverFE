@@ -4,7 +4,9 @@ import {Spinner} from "../utill/Spinner.tsx";
 import {useNavigate} from "react-router-dom";
 import api from "../axios/Axios.tsx";
 
-const TAGS = ['Spring', 'NodeJS', "ASP.Net", 'React', 'RDB', 'NoSql', "Java", "C#", "JavaScript", 'OS', 'Algorithm', 'Data Structure', 'Network', "Design Pattern", "SW Engineering", "DevOps",];
+// const TAGS = ['Spring', 'NodeJS', "ASP.Net", 'React', 'RDB', 'NoSql', "Java", "C#", "JavaScript", 'OS', 'Algorithm', 'Data Structure', 'Network', "Design Pattern", "SW Engineering", "DevOps"];
+
+const TAGS = Object.keys(TagToEnumMap);
 
 export function Home() {
     const navigate = useNavigate();

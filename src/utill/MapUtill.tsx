@@ -14,7 +14,11 @@ export const TagToEnumMap: Record<string, string> = {
     "Network": "NETWORK",
     "Design Pattern": "DESIGN_PATTERN",
     "SW Engineering": "SW_ENGINEERING",
-    "DevOps": "DEVOPS"
+    "DevOps": "DEVOPS",
+    "Python": "PYTHON",
+    "R": "R",
+    "C++": "C_PLUS_PLUS",
+    "Unity": "UNITY",
 };
 
 export const PositionToEnumMap: Record<string, string> = {
