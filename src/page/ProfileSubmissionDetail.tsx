@@ -17,7 +17,7 @@ export default function ProfileSubmissionDetail() {
     useEffect(() => {
         const token = localStorage.getItem('token');
         (!token) && navigate('/login');
-        (!question || !tag || !answer || !feedback || !isCorrect) && navigate('/profile')
+        (!question || !tag || !answer || !feedback) && navigate('/profile')
     }, [location.pathname]);
 
     return (

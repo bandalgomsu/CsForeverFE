@@ -64,7 +64,7 @@ export default function Profile() {
                 ) : (
                     <>
                         <div className="text-blue-700 text-xl font-bold text-left">
-                            {nickname} - {email}
+                            {nickname}
                         </div>
 
                         <div>
@@ -89,13 +89,13 @@ export default function Profile() {
                 onClick={() => navigate('/profile/submission', {state: {isCorrect: true}})}
                 className="text-gray-400 font-bold text-left cursor-pointer hover:underline"
             >
-              해결한 문제 보기
+              해결한 문제
             </span>
                             <span
                                 onClick={() => navigate('/profile/submission', {state: {isCorrect: false}})}
                                 className="text-gray-400 font-bold text-right cursor-pointer hover:underline"
                             >
-              틀린 문제 보기
+              틀린 문제
             </span>
                         </div>
                     </>
