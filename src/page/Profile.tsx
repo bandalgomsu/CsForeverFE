@@ -5,7 +5,7 @@ import api from "../axios/Axios.tsx";
 export default function Profile() {
     const navigate = useNavigate();
 
-    const [email, setEmail] = useState('');
+    // const [email, setEmail] = useState('');
     const [nickname, setNickname] = useState('');
     const [position, setPosition] = useState('');
     const [career, setCareer] = useState('');
@@ -29,7 +29,7 @@ export default function Profile() {
             setIsLoading(true);
             const res = await api.get(`/api/v1/user/profile`);
             const {email, nickname, correctSubmissionCount, position, career} = res.data;
-            setEmail(email);
+            // setEmail(email);
             setNickname(nickname);
             setCorrectSubmissionCount(correctSubmissionCount)
             setPosition(position)
