@@ -60,6 +60,28 @@ export function Home() {
         }
     };
 
+    const handleGetBestAnswer = async () => {
+        setIsLoading(true)
+        setIsCheckLoading(true);           // 로딩 시작
+
+        try {
+            const res = await api.get(`/api/v1/questions/bestAnswer/${questionId}`)
+
+            const data = res.data
+            setIsCorrect(false);
+            setFeedback(`모범답안 : ${data.bestAnswer}`);
+
+            setError("")
+            setShowQuestionBox(true);
+            setShowResultBox(true);
+        } catch (error) {
+            setError('모범 답안을 불러오던 중 오류가 발생했습니다. 잠시 후 다시 시도 해주세요.');
+        } finally {
+            setIsCheckLoading(false);
+            setIsLoading(false)
+        }
+    };
+
     const handleGetQuestion = async () => {
         setIsLoading(true)
         setIsGetQuestionLoading(true);// 로딩 시작
@@ -157,7 +179,8 @@ export function Home() {
             {showQuestionBox && (
                 <div className="w-full max-w-xl bg-gray-100 p-6 rounded-lg shadow mb-6">
                     <p className="text-base sm:text-lg font-semibold mb-4">
-                        문제: {question}
+                        문제: {question} <span className="cursor-pointer hover:underline font-bold text-red-600"
+                                             onClick={handleGetBestAnswer}>[답안 보기]</span>
                     </p>
 
                     <textarea
