@@ -1,12 +1,15 @@
 import {useNavigate} from 'react-router-dom';
 import {useEffect, useState} from "react";
 import api from "../axios/Axios.tsx";
+import {CorrectCountToTitleMap} from "../utill/MapUtill.tsx";
 
 export default function Profile() {
     const navigate = useNavigate();
 
     // const [email, setEmail] = useState('');
     const [nickname, setNickname] = useState('');
+    const [title, setTitle] = useState('');
+    const [color, setColor] = useState('');
     const [position, setPosition] = useState('');
     const [career, setCareer] = useState('');
     const [correctSubmissionCount, setCorrectSubmissionCount] = useState('');
@@ -34,6 +37,14 @@ export default function Profile() {
             setCorrectSubmissionCount(correctSubmissionCount)
             setPosition(position)
             setCareer(career)
+
+            const titleMap = CorrectCountToTitleMap(correctSubmissionCount)
+            const title = titleMap.title;
+            const color = titleMap.color;
+
+            setTitle(title);
+            setColor(color);
+
         } catch (e) {
             console.error(e);
             setError('프로필을 불러오는데 실패했습니다. 잠시 후 다시 시도해주세요.');
@@ -64,7 +75,7 @@ export default function Profile() {
                 ) : (
                     <>
                         <div className="text-blue-700 text-xl font-bold text-left">
-                            {nickname}
+                            <span className={color}>{title}</span> {nickname}
                         </div>
 
                         <div>
