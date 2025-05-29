@@ -13,6 +13,7 @@ export default function Profile() {
     const [position, setPosition] = useState('');
     const [career, setCareer] = useState('');
     const [correctSubmissionCount, setCorrectSubmissionCount] = useState('');
+    const [ranking, setRanking] = useState('');
 
     const [isLoading, setIsLoading] = useState<boolean | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -31,7 +32,7 @@ export default function Profile() {
         try {
             setIsLoading(true);
             const res = await api.get(`/api/v1/user/profile`);
-            const {nickname, correctSubmissionCount, position, career} = res.data;
+            const {nickname, correctSubmissionCount, position, career, ranking} = res.data;
             // setEmail(email);
             setNickname(nickname);
             setCorrectSubmissionCount(correctSubmissionCount)
@@ -44,6 +45,12 @@ export default function Profile() {
 
             setTitle(title);
             setColor(color);
+
+            if (ranking == null) {
+                setRanking("집계중..");
+            } else {
+                setRanking(`${ranking}위`);
+            }
 
         } catch (e) {
             console.error(e);
@@ -81,6 +88,11 @@ export default function Profile() {
                         <div>
                             <span className="text-gray-400 font-bold text-left">해결한 문제</span>
                             <span className="text-black font-bold text-left"> - {correctSubmissionCount} 개</span>
+                        </div>
+
+                        <div>
+                            <span className="text-gray-400 font-bold text-left">랭킹</span>
+                            <span className="text-black font-bold text-left"> - {ranking}</span>
                         </div>
 
                         <div>
