@@ -2,6 +2,7 @@ import {useLocation, useNavigate} from 'react-router-dom';
 import {useEffect, useState} from "react";
 import api from "../axios/Axios.tsx";
 import {ArrowLeft, ArrowRight} from "lucide-react";
+import {TagToEnumMap} from "../utill/MapUtill.tsx";
 
 export interface Submission {
     submissionId: number;
@@ -31,6 +32,8 @@ export default function ProfileSubmission() {
     const [isLoading, setIsLoading] = useState<boolean | null>(null);
     const [error, setError] = useState<string | null>(null);
 
+    const [selectedTag, setSelectedTag] = useState<string>('ALL');
+
     useEffect(() => {
         const token = localStorage.getItem('token');
         !token && navigate('/login');
@@ -40,12 +43,21 @@ export default function ProfileSubmission() {
         }
         fetch()
 
-    }, [location.pathname, currentPage]);
+        setError("");
+
+    }, [location.pathname, currentPage, selectedTag]);
 
     async function fetchSubmissions() {
         try {
             setIsLoading(true);
-            const res = await api.get(`/api/v1/user/profile/submissions?isCorrect=${isCorrect}&page=${currentPage}&size=${pageSize}`);
+
+            let res;
+
+            if (selectedTag === 'ALL') {
+                res = await api.get(`/api/v1/user/profile/submissions?isCorrect=${isCorrect}&page=${currentPage}&size=${pageSize}`);
+            } else {
+                res = await api.get(`/api/v1/user/profile/submissions/${selectedTag}?isCorrect=${isCorrect}&page=${currentPage}&size=${pageSize}`);
+            }
 
             setPage(res.data.results);
             setCurrentPage(res.data.currentPage);
@@ -86,16 +98,35 @@ export default function ProfileSubmission() {
                     // ✅ 로딩 완료 후: 전체 콘텐츠 렌더링
                     <>
                         <div className="flex justify-between relative">
-            <span onClick={() => navigate('/profile')}>
-              <ArrowLeft className="hover:underline cursor-pointer"/>
-            </span>
+                            <span onClick={() => navigate('/profile')}>
+                              <ArrowLeft className="hover:underline cursor-pointer"/>
+                            </span>
                             <span
                                 className={`
-                absolute left-1/2 transform -translate-x-1/2
-                font-bold ${isCorrect ? 'text-blue-500' : 'text-red-500'}`}>
-              {isCorrect ? "해결한 문제" : "틀린 문제"}
-            </span>
-                            <span></span>
+                                    absolute left-1/2 transform -translate-x-1/2
+                                    font-bold ${isCorrect ? 'text-blue-500' : 'text-red-500'}`}>
+                                  {isCorrect ? "해결한 문제" : "틀린 문제"}
+                            </span>
+                            <span className="flex items-center gap-2">
+                              <label htmlFor="tag-select" className="text-sm text-gray-600"></label>
+                              <select
+                                  id="tag-select"
+                                  value={selectedTag}
+                                  onChange={(e) => {
+                                      setSelectedTag(e.target.value);
+                                      setCurrentPage(1); // 태그 바뀌면 첫 페이지로
+                                  }}
+                                  className="text-sm border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-700 bg-white"
+                              >
+                                <option value="ALL">전체</option>
+                                  {Object.entries(TagToEnumMap).map(([label, value]) => (
+                                      <option key={value} value={value}>
+                                          {label}
+                                      </option>
+                                  ))}
+                              </select>
+                            </span>
+
                         </div>
 
                         <br/>
