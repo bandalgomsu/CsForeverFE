@@ -2,7 +2,6 @@ import {useLocation, useNavigate} from 'react-router-dom';
 import {useEffect, useState} from "react";
 import api from "../axios/Axios.tsx";
 import {ArrowLeft, ArrowRight} from "lucide-react";
-import {TagToEnumMap} from "../utill/MapUtill.tsx";
 
 export interface Submission {
     submissionId: number;
@@ -107,25 +106,26 @@ export default function ProfileSubmission() {
                                     font-bold ${isCorrect ? 'text-blue-500' : 'text-red-500'}`}>
                                   {isCorrect ? "해결한 문제" : "틀린 문제"}
                             </span>
-                            <span className="flex items-center gap-2">
-                              <label htmlFor="tag-select" className="text-sm text-gray-600"></label>
-                              <select
-                                  id="tag-select"
-                                  value={selectedTag}
-                                  onChange={(e) => {
-                                      setSelectedTag(e.target.value);
-                                      setCurrentPage(1); // 태그 바뀌면 첫 페이지로
-                                  }}
-                                  className="text-sm border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-700 bg-white"
-                              >
-                                <option value="ALL">전체</option>
-                                  {Object.entries(TagToEnumMap).map(([label, value]) => (
-                                      <option key={value} value={value}>
-                                          {label}
-                                      </option>
-                                  ))}
-                              </select>
-                            </span>
+                            <span></span>
+                            {/*<span className="flex items-center gap-2">*/}
+                            {/*  <label htmlFor="tag-select" className="text-sm text-gray-600"></label>*/}
+                            {/*  <select*/}
+                            {/*      id="tag-select"*/}
+                            {/*      value={selectedTag}*/}
+                            {/*      onChange={(e) => {*/}
+                            {/*          setSelectedTag(e.target.value);*/}
+                            {/*          setCurrentPage(1); // 태그 바뀌면 첫 페이지로*/}
+                            {/*      }}*/}
+                            {/*      className="text-sm border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-700 bg-white"*/}
+                            {/*  >*/}
+                            {/*    <option value="ALL">전체</option>*/}
+                            {/*      {Object.entries(TagToEnumMap).map(([label, value]) => (*/}
+                            {/*          <option key={value} value={value}>*/}
+                            {/*              {label}*/}
+                            {/*          </option>*/}
+                            {/*      ))}*/}
+                            {/*  </select>*/}
+                            {/*</span>*/}
 
                         </div>
 
