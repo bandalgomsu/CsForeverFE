@@ -23,6 +23,13 @@ export default function Layout() {
         try {
             await api.delete("/api/v1/auth/logout")
             localStorage.removeItem("token");
+
+            //@ts-ignore
+            if (window.ReactNativeWebView?.postMessage) {
+                //@ts-ignore
+                window.ReactNativeWebView.postMessage(JSON.stringify({type: 'logout'}));
+            }
+
             setIsLoggedIn(false);
             alert("로그아웃에 성공했습니다.")
             navigate('/');
