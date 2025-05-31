@@ -28,6 +28,13 @@ export default function Login() {
 
             const {token} = res.data;
             localStorage.setItem('token', token);
+
+            //@ts-ignore
+            if (window.ReactNativeWebView) {
+                //@ts-ignore
+                window.ReactNativeWebView.postMessage(JSON.stringify({token}));
+            }
+
             navigate('/');
         } catch (e) {
             setError('로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.');
