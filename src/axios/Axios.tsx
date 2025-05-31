@@ -23,8 +23,17 @@ api.interceptors.response.use(
     response => response,
     error => {
         if (error.response?.status === 401) {
-            // 예: 토큰 만료 → 로그인으로 이동
-            alert("로그인이 필요합니다.")
+            //@ts-ignore
+            if (!window.ReactNativeWebView) {
+                alert("로그인이 필요합니다.")
+            }
+
+            //@ts-ignore
+            if (window.ReactNativeWebView?.postMessage) {
+                //@ts-ignore
+                window.ReactNativeWebView.postMessage(JSON.stringify({type: 'login-required'}));
+            }
+            
             console.log(error)
             localStorage.removeItem("token");
             window.location.href = '/login';
