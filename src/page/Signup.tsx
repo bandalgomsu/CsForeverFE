@@ -261,6 +261,9 @@ export default function Signup() {
                     value={position}
                     onChange={(e) => setPosition(e.target.value)}
                     className="w-full p-3 mb-6 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter' && !isSignupDisabled) handleSignup();
+                    }}
                 >
                     <option value="">선택하세요</option>
                     <option value="FRONTEND">프론트엔드</option>

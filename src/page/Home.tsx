@@ -188,6 +188,14 @@ export function Home() {
                         onChange={(e) => setAnswer(e.target.value)}
                         placeholder="정답을 입력하세요... (최소 10글자 / 최대 300글자)"
                         className="w-full h-32 p-3 border border-gray-300 rounded mb-4 resize-none focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter' && !e.shiftKey) {
+                                e.preventDefault(); // 기본 줄바꿈 방지
+                                if (!(isLoading || isCheckLoading || answer.trim().length < 10)) {
+                                    handleSubmitCheck();
+                                }
+                            }
+                        }}
                     />
 
                     {showResultBox && (

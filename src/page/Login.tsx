@@ -73,6 +73,16 @@ export default function Login() {
                     onChange={(e) => setPassword(e.target.value)}
                     className="w-full p-3 mb-6 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
                     placeholder="••••••••"
+                    onKeyDown={(e) => {
+
+                        if (e.key === 'Enter' && !e.shiftKey) {
+
+                            e.preventDefault();
+                            if (!(isLoading || email.trim() === '' || password.trim() === '')) {
+                                handleLogin();
+                            }
+                        }
+                    }}
                 />
 
                 <button
