@@ -31,8 +31,9 @@ export default function Layout() {
             }
 
             setIsLoggedIn(false);
+
             //@ts-ignore
-            if (!window.ReactNativeWebView) {
+            if (window.ReactNativeWebView) {
                 alert("로그아웃에 성공했습니다.")
             }
             navigate('/');
@@ -50,8 +51,6 @@ export default function Layout() {
                 await window.ReactNativeWebView.postMessage(JSON.stringify({type: 'logout-fail'}));
             }
         }
-
-
     }
 
     return (
