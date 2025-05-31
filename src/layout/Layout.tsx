@@ -31,11 +31,24 @@ export default function Layout() {
             }
 
             setIsLoggedIn(false);
-            alert("로그아웃에 성공했습니다.")
+            //@ts-ignore
+            if (!window.ReactNativeWebView) {
+                alert("로그아웃에 성공했습니다.")
+            }
             navigate('/');
         } catch (e) {
             console.error(e)
-            alert("로그아웃에 실패했습니다. 잠시 후 다시 시도해주세요.")
+
+            //@ts-ignore
+            if (!window.ReactNativeWebView) {
+                alert("로그아웃에 실패했습니다. 잠시 후 다시 시도해주세요.")
+            }
+
+            //@ts-ignore
+            if (window.ReactNativeWebView?.postMessage) {
+                //@ts-ignore
+                await window.ReactNativeWebView.postMessage(JSON.stringify({type: 'logout-fail'}));
+            }
         }
 
 
