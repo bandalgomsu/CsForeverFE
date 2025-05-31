@@ -32,7 +32,7 @@ export default function Login() {
             //@ts-ignore
             if (window.ReactNativeWebView) {
                 //@ts-ignore
-                window.ReactNativeWebView.postMessage(JSON.stringify({token}));
+                await window.ReactNativeWebView.postMessage(JSON.stringify({token}));
             }
 
             navigate('/');

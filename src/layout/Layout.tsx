@@ -27,7 +27,7 @@ export default function Layout() {
             //@ts-ignore
             if (window.ReactNativeWebView?.postMessage) {
                 //@ts-ignore
-                window.ReactNativeWebView.postMessage(JSON.stringify({type: 'logout'}));
+                await window.ReactNativeWebView.postMessage(JSON.stringify({type: 'logout'}));
             }
 
             setIsLoggedIn(false);
