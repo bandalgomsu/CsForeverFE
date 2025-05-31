@@ -37,7 +37,7 @@ export default function Layout() {
                 alert("로그아웃에 성공했습니다.")
             }
 
-            navigate('/');
+            navigate('/login');
         } catch (e) {
             console.error(e)
 
