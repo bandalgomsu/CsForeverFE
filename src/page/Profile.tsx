@@ -14,6 +14,8 @@ export default function Profile() {
     const [career, setCareer] = useState('');
     const [correctSubmissionCount, setCorrectSubmissionCount] = useState('');
     const [ranking, setRanking] = useState('');
+    const [submissionCount, setSubmissionCount] = useState('');
+    const [correctPercent, setCorrectPercent] = useState('');
 
     const [isLoading, setIsLoading] = useState<boolean | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -32,12 +34,22 @@ export default function Profile() {
         try {
             setIsLoading(true);
             const res = await api.get(`/api/v1/user/profile`);
-            const {nickname, correctSubmissionCount, position, career, ranking} = res.data;
+            const {
+                nickname,
+                correctSubmissionCount,
+                position,
+                career,
+                ranking,
+                submissionCount,
+                correctPercent
+            } = res.data;
             // setEmail(email);
             setNickname(nickname);
             setCorrectSubmissionCount(correctSubmissionCount)
             setPosition(position)
             setCareer(career)
+            setSubmissionCount(submissionCount)
+            setCorrectPercent(correctPercent)
 
             const titleMap = CorrectCountToTitleMap(correctSubmissionCount)
             const title = titleMap.title;
@@ -93,6 +105,12 @@ export default function Profile() {
                         <div>
                             <span className="text-gray-400 font-bold text-left">랭킹</span>
                             <span className="text-black font-bold text-left"> - {ranking}</span>
+                        </div>
+
+                        <div>
+                            <span className="text-gray-400 font-bold text-left">제출 / 정답률</span>
+                            <span
+                                className="text-black font-bold text-left"> - {submissionCount}번 / {correctPercent}%</span>
                         </div>
 
                         <div>
