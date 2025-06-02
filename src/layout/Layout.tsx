@@ -77,6 +77,13 @@ export default function Layout() {
                 <div>
                     Contact : <a href="mailto:maildevgogo@gmail.com" className="underline">maildevgogo@gmail.com</a>
                 </div>
+                <div
+                    onClick={() => navigate("/app-policy")}
+                    className="mt-2 hover:underline cursor-pointer"
+                >개인정보 처리 방침
+                </div>
+
+
                 {isLoggedIn && (
                     <div
                         onClick={() => handleLogout()}

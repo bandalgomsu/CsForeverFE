@@ -9,6 +9,7 @@ import Signup from "./page/Signup.tsx";
 import Profile from "./page/Profile.tsx";
 import ProfileSubmission from "./page/ProfileSubmission.tsx";
 import ProfileSubmissionDetail from "./page/ProfileSubmissionDetail.tsx";
+import AppPolicy from "./page/AppPolicy.tsx";
 
 export const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -23,6 +24,7 @@ createRoot(document.getElementById('root')!).render(
                     <Route path="profile" element={<Profile/>}/>
                     <Route path="profile/submission" element={<ProfileSubmission/>}/>
                     <Route path="profile/submission/detail" element={<ProfileSubmissionDetail/>}/>
+                    <Route path="app-policy" element={<AppPolicy/>}/>
                 </Route>
             </Routes>
         </BrowserRouter>
