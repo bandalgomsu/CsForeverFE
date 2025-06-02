@@ -1,9 +1,8 @@
-import {useLocation, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 
 export default function AppPolicy() {
     const navigate = useNavigate();
-    const location = useLocation();
 
     return (
         <div
