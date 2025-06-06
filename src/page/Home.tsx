@@ -3,6 +3,7 @@ import {TagToEnumMap} from "../utill/MapUtill.tsx";
 import {Spinner} from "../utill/Spinner.tsx";
 import {useNavigate} from "react-router-dom";
 import api from "../axios/Axios.tsx";
+import {CircleCheck} from "lucide-react";
 
 // const TAGS = ['Spring', 'NodeJS', "ASP.Net", 'React', 'RDB', 'NoSql', "Java", "C#", "JavaScript", 'OS', 'Algorithm', 'Data Structure', 'Network', "Design Pattern", "SW Engineering", "DevOps"];
 
@@ -20,6 +21,7 @@ export function Home() {
     const [showResultBox, setShowResultBox] = useState(false);
 
     const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+    const [isSolution, setIsSolution] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean | null>(null);
     const [error, setError] = useState<String | null>(null);
 
@@ -47,6 +49,11 @@ export function Home() {
 
             const data = res.data
             setIsCorrect(data.isCorrect);
+
+            if (data.isCorrect) {
+                setIsSolution(true);
+            }
+
             setFeedback(data.feedback);
 
             setError("")
@@ -97,6 +104,8 @@ export function Home() {
             setShowQuestionBox(true);
             setShowResultBox(false);
             setAnswer('');
+
+            setIsSolution(data.isSolution)
         } catch (error) {
             setError('문제를 불러오는 중 오류가 발생했습니다. 잠시 후 다시 시도 해주세요.');
         } finally {
@@ -120,6 +129,8 @@ export function Home() {
             setShowQuestionBox(true);
             setShowResultBox(false);
             setAnswer('');
+            
+            setIsSolution(data.isSolution)
         } catch (error) {
             setError('문제를 불러오는 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
         } finally {
@@ -179,8 +190,12 @@ export function Home() {
             {showQuestionBox && (
                 <div className="w-full max-w-xl bg-gray-100 p-6 rounded-lg shadow mb-6">
                     <p className="text-base sm:text-lg font-semibold mb-4">
-                        문제: {question} <span className="cursor-pointer hover:underline font-bold text-red-600"
-                                             onClick={handleGetBestAnswer}>[답안 보기]</span>
+                        {isSolution ? <CircleCheck className="inline align-middle mr-2 text-blue-600"/> : null}
+                        문제: {question}
+                        <span
+                            className="cursor-pointer hover:underline font-bold text-red-600"
+                            onClick={handleGetBestAnswer}>[답안 보기]
+                        </span>
                     </p>
 
                     <textarea
