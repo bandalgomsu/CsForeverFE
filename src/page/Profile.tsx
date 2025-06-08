@@ -65,7 +65,6 @@ export default function Profile() {
             }
 
         } catch (e) {
-            console.error(e);
             setError('프로필을 불러오는데 실패했습니다. 잠시 후 다시 시도해주세요.');
         }
 
@@ -93,8 +92,24 @@ export default function Profile() {
                     </div>
                 ) : (
                     <>
-                        <div className="text-blue-700 text-xl font-bold text-left">
-                            <span className={color}>{title}</span> {nickname}
+                        <div className="text-blue-700 text-xl font-bold text-left flex justify-between">
+                            <span><span className={color}>{title}</span> {nickname}</span>
+                            <span className="text-sm text-gray-400 cursor-pointer hover:underline"
+                                  onClick={() => navigate("/profile/edit", {
+                                      state: {
+                                          nickname: nickname,
+                                          position: position,
+                                          career: career,
+                                          correctSubmissionCount: correctSubmissionCount,
+                                          submissionCount: submissionCount,
+                                          correctPercent: correctPercent,
+                                          ranking: ranking,
+                                          title: title,
+                                          color: color
+                                      }
+                                  })}>
+                                수정
+                            </span>
                         </div>
 
                         <div>

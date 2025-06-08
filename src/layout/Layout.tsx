@@ -39,8 +39,6 @@ export default function Layout() {
 
             navigate('/login');
         } catch (e) {
-            console.error(e)
-
             //@ts-ignore
             if (!window.ReactNativeWebView) {
                 alert("로그아웃에 실패했습니다. 잠시 후 다시 시도해주세요.")

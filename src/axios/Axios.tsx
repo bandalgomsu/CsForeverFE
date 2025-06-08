@@ -33,8 +33,7 @@ api.interceptors.response.use(
                 //@ts-ignore
                 window.ReactNativeWebView.postMessage(JSON.stringify({type: 'login-required'}));
             }
-            
-            console.log(error)
+
             localStorage.removeItem("token");
             window.location.href = '/login';
         }

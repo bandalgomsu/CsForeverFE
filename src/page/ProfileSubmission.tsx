@@ -63,7 +63,6 @@ export default function ProfileSubmission() {
             setCurrentPage(res.data.currentPage);
             setTotalPages(res.data.totalPages)
         } catch (e) {
-            console.error(e)
             setError('문제를 불러오는데 문제가 생겼습니다. 잠시 후 다시 시도해주세요.');
         }
 

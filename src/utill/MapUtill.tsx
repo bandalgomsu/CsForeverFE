@@ -39,6 +39,25 @@ export const PositionToEnumMap: Record<string, string> = {
     "기타": "DEFAULT"
 };
 
+export const CareerToEnumMap: Record<string, string> = {
+    "0년차": "0",
+    "1년차": "1",
+    "2년차": "2",
+    "3년차": "3",
+    "4년차": "4",
+    "5년차": "5",
+    "6년차": "6",
+    "7년차": "7",
+    "8년차": "8",
+    "9년차": "9",
+    "10년차": "10",
+    "11년차": "11",
+    "12년차": "12",
+    "13년차": "13",
+    "14년차": "14",
+    "15년차 이상": "15",
+};
+
 export function CorrectCountToTitleMap(count: number): { title: string, color: string } {
     let color;
     let title;
@@ -73,3 +92,5 @@ export function CorrectCountToTitleMap(count: number): { title: string, color: s
         title: title
     }
 }
+
+

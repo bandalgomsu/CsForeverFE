@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import api from "../axios/Axios.tsx";
+import {CareerToEnumMap, PositionToEnumMap} from "../utill/MapUtill.tsx";
 
 export default function Signup() {
     const navigate = useNavigate();
@@ -76,7 +77,6 @@ export default function Signup() {
             setResendCooldown(null);
             setError('');
         } catch (e) {
-            console.log(e)
             setIsVerified(false);
             setError('이메일 인증에 실패 했습니다.');
         }
@@ -132,7 +132,7 @@ export default function Signup() {
                     value={nickname}
                     onChange={(e) => setNickname(e.target.value)}
                     className="w-full p-3 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
-                    placeholder="닉네임을 입력하세요"
+                    placeholder="닉네임을 입력하세요 (최대 20자)"
                 />
 
                 {/* 이메일 + 인증번호 전송 */}
@@ -242,17 +242,11 @@ export default function Signup() {
                     className="w-full p-3 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
                 >
                     <option value="">선택하세요</option>
-                    <option value="0">0년차</option>
-                    <option value="1">1년차</option>
-                    <option value="2">2년차</option>
-                    <option value="3">3년차</option>
-                    <option value="4">4년차</option>
-                    <option value="5">5년차</option>
-                    <option value="6">6년차</option>
-                    <option value="7">7년차</option>
-                    <option value="8">8년차</option>
-                    <option value="9">9년차</option>
-                    <option value="10">10년차 이상</option>
+                    {Object.entries(CareerToEnumMap).map(([label, value]) => (
+                        <option key={value} value={value}>
+                            {label}
+                        </option>
+                    ))}
                 </select>
 
                 {/* 선호 직군 */}
@@ -266,16 +260,11 @@ export default function Signup() {
                     }}
                 >
                     <option value="">선택하세요</option>
-                    <option value="FRONTEND">프론트엔드</option>
-                    <option value="BACKEND">백엔드</option>
-                    <option value="FULLSTACK">풀스택</option>
-                    <option value="ANDROID">안드로이드</option>
-                    <option value="IOS">IOS</option>
-                    <option value="GAME">게임</option>
-                    <option value="AI">AI</option>
-                    <option value="DATA_ENGINEER">데이터 엔지니어</option>
-                    <option value="DEVOPS">DevOps</option>
-                    <option value="DEFAULT">기타</option>
+                    {Object.entries(PositionToEnumMap).map(([label, value]) => (
+                        <option key={value} value={value}>
+                            {label}
+                        </option>
+                    ))}
                 </select>
 
                 {/* 회원가입 버튼 */}
