@@ -70,7 +70,16 @@ export default function ProfileEdit() {
                                 <input
                                     value={nickname}
                                     onChange={(e) => setNickname(e.target.value)}
-                                    className="focus:outline-none focus:ring-0 bg-transparent border-2"
+                                    className="
+                                    border-2
+                                    p-0
+                                    text-sm
+                                    font-bold
+                                    focus:outline-none focus:ring-0
+                                    cursor-pointer
+                                    text-center
+                                    bg-white
+                                    "
                                     placeholder='최대 20자'
                                 />
                             </span>
