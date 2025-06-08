@@ -70,7 +70,9 @@ export default function ProfileEdit() {
                                 <input
                                     value={nickname}
                                     onChange={(e) => setNickname(e.target.value)}
+                                    maxLength={20}
                                     className="
+                                    inline-block w-24
                                     border-2
                                     p-0
                                     text-sm
