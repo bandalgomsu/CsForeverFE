@@ -78,7 +78,6 @@ export default function ProfileEdit() {
                                     text-sm
                                     font-bold
                                     focus:outline-none focus:ring-0
-                                    cursor-pointer
                                     text-center
                                     bg-white
                                     "
