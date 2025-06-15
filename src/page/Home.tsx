@@ -3,7 +3,8 @@ import {TagToEnumMap} from "../utill/MapUtill.tsx";
 import {Spinner} from "../utill/Spinner.tsx";
 import {useNavigate} from "react-router-dom";
 import api from "../axios/Axios.tsx";
-import {CircleCheck} from "lucide-react";
+import {CircleCheck, Search} from "lucide-react";
+
 
 // const TAGS = ['Spring', 'NodeJS', "ASP.Net", 'React', 'RDB', 'NoSql', "Java", "C#", "JavaScript", 'OS', 'Algorithm', 'Data Structure', 'Network', "Design Pattern", "SW Engineering", "DevOps"];
 
@@ -26,6 +27,10 @@ export function Home() {
     const [error, setError] = useState<String | null>(null);
 
     const [isCheckLoading, setIsCheckLoading] = useState(false);
+
+    const [term, setTerm] = useState<string>('');
+    const [termDefinition, setTermDefinition] = useState<string>('');
+    const [isGetTermDefinitionLoading, setIsGetTermDefinitionLoading] = useState(false);
 
     const [isGetQuestionLoading, setIsGetQuestionLoading] = useState(false);
     const [isGetQuestionReLoading, setIsGetQuestionReLoading] = useState(false);
@@ -81,6 +86,7 @@ export function Home() {
             setError("")
             setShowQuestionBox(true);
             setShowResultBox(true);
+
         } catch (error) {
             setError('모범 답안을 불러오던 중 오류가 발생했습니다. 잠시 후 다시 시도 해주세요.');
         } finally {
@@ -104,6 +110,8 @@ export function Home() {
             setShowQuestionBox(true);
             setShowResultBox(false);
             setAnswer('');
+            setTerm('');
+            setTermDefinition('');
 
             setIsSolution(data.isSolution)
         } catch (error) {
@@ -129,12 +137,33 @@ export function Home() {
             setShowQuestionBox(true);
             setShowResultBox(false);
             setAnswer('');
-            
+            setTerm('');
+            setTermDefinition('');
+
             setIsSolution(data.isSolution)
         } catch (error) {
             setError('문제를 불러오는 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
         } finally {
             setIsGetQuestionReLoading(false);
+            setIsLoading(false)
+        }
+    };
+
+    const handleGetTermDefinition = async () => {
+        setIsLoading(true)
+        setIsGetTermDefinitionLoading(true);// 로딩 시작
+
+        try {
+            const trimmed = term.trim();
+            const isKorean = /[가-힣]/.test(trimmed);
+            const noSpaceTerm = trimmed.replace(/\s+/g, '');
+
+            const res = await api.get(`/api/v1/terms/${encodeURIComponent(noSpaceTerm)}`);
+            setTermDefinition(res.data.definition);
+        } catch (error) {
+            setError('단어를 불러오는 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+        } finally {
+            setIsGetTermDefinitionLoading(false);
             setIsLoading(false)
         }
     };
@@ -226,6 +255,46 @@ export function Home() {
                             </p>
                         </div>
                     )}
+                    {showResultBox && (
+                        <div className="mt-6 mb-4 bg-white border border-gray-300 rounded p-4 shadow-sm">
+                            <p className="inline-flex items-center gap-2 mb-3">
+                                <span>용어 검색 :</span>
+                                <input
+                                    type="text"
+                                    className="h-6 w-20 text-xs p-1 border border-gray-300 bg-white rounded"
+                                    placeholder="최대 30자"
+                                    value={term}
+                                    onChange={(e) => setTerm(e.target.value)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter' && !e.shiftKey) {
+                                            e.preventDefault(); // 기본 줄바꿈 방지
+                                            if (!(isLoading || isGetTermDefinitionLoading || term.trim().length < 1 || term.trim().length > 30)) {
+                                                handleGetTermDefinition();
+                                            }
+                                        }
+                                    }}
+                                />
+                                <button
+                                    className="bg-blue-500 px-1 text-white rounded hover:bg-blue-600 transition disabled:opacity-50 flex items-center justify-center"
+                                    onClick={handleGetTermDefinition}
+                                    disabled={isLoading || isGetTermDefinitionLoading || term.trim().length < 1 || term.trim().length > 30}
+                                >
+                                    {isGetTermDefinitionLoading ? (
+                                        <>
+                                            <Spinner/>
+                                        </>
+                                    ) : (
+                                        <Search size={18}/>
+                                    )}
+                                </button>
+                            </p>
+                            {termDefinition != '' && (
+                                <p className="text-sm sm:text-base text-gray-700 whitespace-pre-line">
+                                    <p>{termDefinition}</p>
+                                </p>
+                            )}
+                        </div>
+                    )}
                     <div className="flex justify-between">
                         {/* 다른 문제 버튼 */}
                         <button
@@ -236,7 +305,6 @@ export function Home() {
                             {isGetQuestionReLoading ? (
                                 <>
                                     <Spinner/>
-                                    불러오는 중...
                                 </>
                             ) : (
                                 '다른 문제'
@@ -252,7 +320,6 @@ export function Home() {
                             {isCheckLoading ? (
                                 <>
                                     <Spinner/>
-                                    채점 중...
                                 </>
                             ) : (
                                 '정답 제출'
@@ -273,7 +340,6 @@ export function Home() {
                 {isGetQuestionLoading ? (
                     <>
                         <Spinner/>
-                        불러오는 중...
                     </>
                 ) : (
                     '문제 풀기'
