@@ -258,7 +258,7 @@ export function Home() {
                     {showResultBox && (
                         <div className="mt-6 mb-4 bg-white border border-gray-300 rounded p-4 shadow-sm">
                             <p className="inline-flex items-center gap-2 mb-3">
-                                <span className="text-sm">용어 검색 :</span>
+                                <span className="text-xs">용어 검색 :</span>
                                 <input
                                     type="text"
                                     className="h-6 w-20 text-xs p-1 border border-gray-300 bg-white rounded"
