@@ -2,6 +2,7 @@ import {useNavigate} from 'react-router-dom';
 import {useEffect, useState} from "react";
 import api from "../axios/Axios.tsx";
 import {CorrectCountToTitleMap} from "../utill/MapUtill.tsx";
+import ActivityCalendar from "react-activity-calendar";
 
 export default function Profile() {
     const navigate = useNavigate();
@@ -16,9 +17,17 @@ export default function Profile() {
     const [ranking, setRanking] = useState('');
     const [submissionCount, setSubmissionCount] = useState('');
     const [correctPercent, setCorrectPercent] = useState('');
+    const [contributions, setContributions] = useState<any[]>([]);
 
     const [isLoading, setIsLoading] = useState<boolean | null>(null);
     const [error, setError] = useState<string | null>(null);
+
+    const currentYear = new Date().getFullYear();
+    const years = Array.from({length: currentYear - 2025 + 1}, (_, i) => 2025 + i);
+    // const years = [2025, 2026, 2027, 2028, 2029, 2030];
+
+    const [year, setYear] = useState<number>(currentYear);
+
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -29,6 +38,34 @@ export default function Profile() {
         fetch()
 
     }, [location.pathname]);
+
+    useEffect(() => {
+        fetchContribution();
+    }, [year]);
+
+    async function fetchContribution() {
+        try {
+            setIsLoading(true);
+            const res = await api.get(`/api/v1/contributions?year=${year}`);
+
+            if (res.data.contributions.length === 0) {
+                setIsLoading(false);
+                return
+            }
+
+            const firstDate = res.data.contributions[0].date.slice(5); // 'MM-DD'
+            if (firstDate !== '01-01') {
+                res.data.contributions.unshift({date: '2025-01-01', count: 0, level: 0});
+            }
+
+            console.log(res.data.contributions);
+            setContributions(res.data.contributions);
+        } catch (e) {
+            setError('이력 정보를 불러오는데 실패했습니다. 잠시 후 다시 시도해주세요.');
+        }
+
+        setIsLoading(false);
+    }
 
     async function fetchProfile() {
         try {
@@ -158,7 +195,46 @@ export default function Profile() {
                 )}
             </div>
 
+            {contributions.length > 0 && (
+                <div className="overflow-auto w-full max-w-md calendar-container">
+                    <ActivityCalendar
+                        data={contributions}
+                        showColorLegend={true}
+                        showWeekdayLabels={true}
+                        theme={{
+                            light: ['#e0f2fe', '#90cdf4', '#60a5fa', '#3b82f6', '#1d4ed8'],
+                            dark: ['#e0f2fe', '#90cdf4', '#60a5fa', '#3b82f6', '#1d4ed8']
+                        }}
+                    />
+                </div>
+            )}
+
+            <div className="w-full max-w-md flex justify-end">
+                <select
+                    value={year}
+                    className="bg-transparent
+                                    border-2
+                                    p-0
+                                    text-sm
+                                    font-bold
+                                    focus:outline-none focus:ring-0
+                                    cursor-pointer
+                                    text-center"
+                    onChange={(e) => setYear(parseInt(e.target.value))}
+                >
+                    {
+                        years.map((year) => (
+                            <option key={year} value={year}>
+                                {year}년
+                            </option>
+                        ))
+                    }
+                </select>
+            </div>
+
             {error && <p className="text-red-600 text-sm mt-4 text-center">{error}</p>}
         </div>
+
+
     );
 }

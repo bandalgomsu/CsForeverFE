@@ -117,6 +117,26 @@ button:focus-visible {
     }
 }
 
+.calendar-container {
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #60a5fa #e0f2fe; /* Firefox: thumb / track */
+}
+
+/* Chrome, Safari, Edge */
+.calendar-container::-webkit-scrollbar {
+    height: 8px; /* 가로 스크롤바 높이 */
+}
+
+.calendar-container::-webkit-scrollbar-track {
+    background: #e0f2fe; /* 트랙 색상 */
+}
+
+.calendar-container::-webkit-scrollbar-thumb {
+    background-color: #60a5fa; /* 스크롤 핸들 색상 (blue-400) */
+    border-radius: 10px;
+    border: 2px solid #e0f2fe; /* 트랙과의 간격 */
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
