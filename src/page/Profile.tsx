@@ -199,7 +199,6 @@ export default function Profile() {
                 <div className="overflow-auto w-full max-w-md calendar-container">
                     <ActivityCalendar
                         data={contributions}
-                        showColorLegend={true}
                         showWeekdayLabels={true}
                         theme={{
                             light: ['#e0f2fe', '#90cdf4', '#60a5fa', '#3b82f6', '#1d4ed8'],
