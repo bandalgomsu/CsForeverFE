@@ -58,7 +58,19 @@ export default function Profile() {
                 res.data.contributions.unshift({date: '2025-01-01', count: 0, level: 0});
             }
 
-            console.log(res.data.contributions);
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            const yyyy = yesterday.getFullYear();
+            const mm = String(yesterday.getMonth() + 1).padStart(2, '0');
+            const dd = String(yesterday.getDate()).padStart(2, '0');
+            const yesterdayStr = `${yyyy}-${mm}-${dd}`;
+            const lastDate = res.data.contributions[res.data.contributions.length - 1].date;
+
+            if (lastDate !== yesterdayStr) {
+                res.data.contributions.push({date: yesterdayStr, count: 0, level: 0});
+            }
+
+            console.log(res.data.contributions)
             setContributions(res.data.contributions);
         } catch (e) {
             setError('이력 정보를 불러오는데 실패했습니다. 잠시 후 다시 시도해주세요.');
