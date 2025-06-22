@@ -70,7 +70,6 @@ export default function Profile() {
                 res.data.contributions.push({date: yesterdayStr, count: 0, level: 0});
             }
 
-            console.log(res.data.contributions)
             setContributions(res.data.contributions);
         } catch (e) {
             setError('이력 정보를 불러오는데 실패했습니다. 잠시 후 다시 시도해주세요.');
