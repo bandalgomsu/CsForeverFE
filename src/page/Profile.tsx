@@ -27,7 +27,7 @@ export default function Profile() {
     // const years = [2025, 2026, 2027, 2028, 2029, 2030];
 
     const [year, setYear] = useState<number>(currentYear);
-
+    const [continuousDay, setContinuousDay] = useState<number>(0);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -70,6 +70,7 @@ export default function Profile() {
                 res.data.contributions.push({date: yesterdayStr, count: 0, level: 0});
             }
 
+            setContinuousDay(res.data.continuosDay);
             setContributions(res.data.contributions);
         } catch (e) {
             setError('이력 정보를 불러오는데 실패했습니다. 잠시 후 다시 시도해주세요.');
@@ -158,6 +159,12 @@ export default function Profile() {
                                   })}>
                                 수정
                             </span>
+                        </div>
+
+                        <div>
+                            <span className="text-gray-400 font-bold text-left text-xs sm:text-base">연속 학습</span>
+                            <span
+                                className="text-black font-bold text-left text-xs sm:text-base"> - {continuousDay}일 🔥</span>
                         </div>
 
                         <div>
