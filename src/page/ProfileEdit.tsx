@@ -47,131 +47,97 @@ export default function ProfileEdit() {
         <div
             className="bg-white text-gray-900 flex flex-col min-h-screen justify-start items-center pt-16 px-4 scale-105 sm:scale-110 transition-transform origin-top">
             <h1
-                className="text-3xl sm:text-4xl md:text-6xl font-bold mb-8 text-blue-600 text-center cursor-pointer"
+                className="text-xl sm:text-3xl md:text-6xl font-bold mb-8 text-blue-600 text-center cursor-pointer"
                 onClick={() => navigate("/")}
             >
                 CS <span className="text-blue-500">Forever</span>
             </h1>
 
             <div className="w-full max-w-md bg-gray-100 p-6 rounded-lg shadow mb-6 text-left">
-                {isLoading ? (
-                    <div className="animate-pulse space-y-4">
-                        <div className="h-6 bg-gray-300 rounded w-3/4"/>
-                        <div className="h-4 bg-gray-200 rounded w-1/2"/>
-                        <div className="h-4 bg-gray-200 rounded w-2/3"/>
-                        <div className="h-4 bg-gray-200 rounded w-1/3"/>
-                        <div className="h-5 bg-gray-300 rounded w-full mt-6"/>
-                    </div>
-                ) : (
-                    <>
-                        <div className="text-blue-700 text-xl font-bold text-left flex justify-between">
-                            <span>
-                                <span className={color}>{title} </span>
-                                <input
-                                    value={nickname}
-                                    onChange={(e) => setNickname(e.target.value)}
-                                    maxLength={20}
-                                    className="
-                                    inline-block w-24
-                                    border-2
-                                    p-0
-                                    text-sm
-                                    font-bold
-                                    focus:outline-none focus:ring-0
-                                    text-center
-                                    bg-white
-                                    "
-                                    placeholder='최대 20자'
-                                />
-                            </span>
-                        </div>
+                <div className="text-blue-700 text-base sm:text-xl font-bold text-left flex justify-between">
+                    <span><span className={color}>{title}</span> {nickname}</span>
+                </div>
 
-                        <div>
-                            <span className="text-gray-400 font-bold text-left">해결한 문제</span>
-                            <span className="text-black font-bold text-left"> - {correctSubmissionCount} 개</span>
-                        </div>
+                <div>
+                    <span className="text-gray-400 font-bold text-left text-xs sm:text-base">해결한 문제</span>
+                    <span
+                        className="text-black font-bold text-left text-xs sm:text-base"> - {correctSubmissionCount} 개</span>
+                </div>
 
-                        <div>
-                            <span className="text-gray-400 font-bold text-left">랭킹</span>
-                            <span className="text-black font-bold text-left"> - {ranking}</span>
-                        </div>
+                <div>
+                    <span className="text-gray-400 font-bold text-left text-xs sm:text-base">랭킹</span>
+                    <span className="text-black font-bold text-left text-xs sm:text-base"> - {ranking}</span>
+                </div>
 
-                        <div>
-                            <span className="text-gray-400 font-bold text-left">제출 / 정답률</span>
-                            <span
-                                className="text-black font-bold text-left"> - {submissionCount}번 / {correctPercent}%</span>
-                        </div>
+                <div>
+                    <span className="text-gray-400 font-bold text-left text-xs sm:text-base">제출 / 정답률</span>
+                    <span
+                        className="text-black font-bold text-left text-xs sm:text-base"> - {submissionCount} / {correctPercent}%</span>
+                </div>
 
-                        <div>
-                            <span className="text-gray-400 font-bold text-left">직군</span>
-                            <span className="text-black font-bold text-left"> - </span>
-                            <select
-                                value={position}
-                                className="bg-transparent
-                                    border-2
-                                    p-0
-                                    text-sm
-                                    font-bold
-                                    focus:outline-none focus:ring-0
-                                    cursor-pointer
-                                    text-center"
-                                onChange={(e) => setPosition(e.target.value)}
-                            >
-                                {Object.entries(PositionToEnumMap).map(([label, value]) => (
-                                    <option key={value} value={value}>
-                                        {label}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
+                <hr className="my-4 border-t border-gray-300"/>
 
-                        <div>
-                            <span className="text-gray-400 font-bold text-left">경력</span>
-                            <span className="text-black font-bold text-left"> - </span>
-                            <select
-                                value={career}
-                                className="bg-transparent
-                                    border-2
-                                    p-0
-                                    text-sm
-                                    font-bold
-                                    focus:outline-none focus:ring-0
-                                    cursor-pointer
-                                    text-center"
-                                onChange={(e) => setCareer(e.target.value)}
-                            >
-                                {Object.entries(CareerToEnumMap).map(([label, value]) => (
-                                    <option key={value} value={value}>
-                                        {label}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
+                <label className="block text-xs sm:text-base font-bold text-gray-700 mb-2">
+                    닉네임
+                </label>
+                <input
+                    type="text"
+                    value={nickname}
+                    onChange={(e) => setNickname(e.target.value)}
+                    className="w-full p-2 text-xs sm:text-base border bg-white border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="닉네임을 입력하세요"
+                />
 
-                        <br/>
+                <label className="block text-xs sm:text-base font-bold text-gray-700 mb-2 mt-4">
+                    직군
+                </label>
+                <select
+                    value={position}
+                    onChange={(e) => setPosition(e.target.value)}
+                    className="w-full p-2 text-xs sm:text-base border bg-white border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                    <option value="">직군을 선택하세요</option>
+                    {Object.keys(PositionToEnumMap).map((pos) => (
+                        <option key={pos} value={PositionToEnumMap[pos]}>
+                            {pos}
+                        </option>
+                    ))}
+                </select>
 
-                        <div className="flex justify-between">
-                            <span
-                                onClick={() => navigate('/profile')}
-                                className="text-gray-400 font-bold text-right cursor-pointer hover:underline"
-                            >
-                                뒤로가기
-                            </span>
-                            <button
-                                onClick={fetchProfileEdit}
-                                disabled={(!nickname.trim() || nickname.length > 20 || !career || !position)}
-                                className={`bg-transparent font-bold text-right hover:underline ${
-                                    (!nickname.trim() || nickname.length > 20 || !career || !position) ? 'text-gray-300 cursor-not-allowed' : 'text-gray-400 cursor-pointer'
-                                }`}
-                            >
-                                수정하기
-                            </button>
-                        </div>
-                    </>
-                )}
+                <label className="block text-xs sm:text-base font-bold text-gray-700 mb-2 mt-4">
+                    경력
+                </label>
+                <select
+                    value={career}
+                    onChange={(e) => setCareer(e.target.value)}
+                    className="w-full p-2 text-xs sm:text-base border bg-white border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                    <option value="">경력을 선택하세요</option>
+                    {Object.keys(CareerToEnumMap).map((career) => (
+                        <option key={career} value={CareerToEnumMap[career]}>
+                            {career}
+                        </option>
+                    ))}
+                </select>
+
+                <div className="flex justify-between mt-6">
+                    <button
+                        onClick={() => navigate("/profile")}
+                        className="px-4 py-2 text-xs sm:text-base bg-gray-300 text-gray-700 font-bold rounded hover:bg-gray-400 transition-colors"
+                    >
+                        취소
+                    </button>
+                    <button
+                        onClick={fetchProfileEdit}
+                        disabled={isLoading || !nickname.trim() || !position || !career}
+                        className="px-4 py-2 text-xs sm:text-base bg-blue-600 text-white font-bold rounded hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+                    >
+                        {isLoading ? '저장 중...' : '저장'}
+                    </button>
+                </div>
             </div>
 
-            {error && <p className="text-red-600 text-sm mt-4 text-center">{error}</p>}
+            {error && <p className="text-red-600 text-xs sm:text-sm mt-4 text-center">{error}</p>}
         </div>
     );
 }

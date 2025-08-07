@@ -123,7 +123,7 @@ export default function Profile() {
         <div
             className="bg-white text-gray-900 flex flex-col min-h-screen justify-start items-center pt-16 px-4 scale-105 sm:scale-110 transition-transform origin-top">
             <h1
-                className="text-3xl sm:text-4xl md:text-6xl font-bold mb-8 text-blue-600 text-center cursor-pointer"
+                className="text-xl sm:text-3xl md:text-6xl font-bold mb-8 text-blue-600 text-center cursor-pointer"
                 onClick={() => navigate("/")}
             >
                 CS <span className="text-blue-500">Forever</span>
@@ -140,9 +140,9 @@ export default function Profile() {
                     </div>
                 ) : (
                     <>
-                        <div className="text-blue-700 text-xl font-bold text-left flex justify-between">
+                        <div className="text-blue-700 text-base sm:text-xl font-bold text-left flex justify-between">
                             <span><span className={color}>{title}</span> {nickname}</span>
-                            <span className="text-sm text-gray-400 cursor-pointer hover:underline"
+                            <span className="text-xs sm:text-sm text-gray-400 cursor-pointer hover:underline"
                                   onClick={() => navigate("/profile/edit", {
                                       state: {
                                           nickname: nickname,
@@ -161,29 +161,30 @@ export default function Profile() {
                         </div>
 
                         <div>
-                            <span className="text-gray-400 font-bold text-left">해결한 문제</span>
-                            <span className="text-black font-bold text-left"> - {correctSubmissionCount} 개</span>
-                        </div>
-
-                        <div>
-                            <span className="text-gray-400 font-bold text-left">랭킹</span>
-                            <span className="text-black font-bold text-left"> - {ranking}</span>
-                        </div>
-
-                        <div>
-                            <span className="text-gray-400 font-bold text-left">제출 / 정답률</span>
+                            <span className="text-gray-400 font-bold text-left text-xs sm:text-base">해결한 문제</span>
                             <span
-                                className="text-black font-bold text-left"> - {submissionCount}번 / {correctPercent}%</span>
+                                className="text-black font-bold text-left text-xs sm:text-base"> - {correctSubmissionCount} 개</span>
                         </div>
 
                         <div>
-                            <span className="text-gray-400 font-bold text-left">직군</span>
-                            <span className="text-black font-bold text-left"> - {position}</span>
+                            <span className="text-gray-400 font-bold text-left text-xs sm:text-base">랭킹</span>
+                            <span className="text-black font-bold text-left text-xs sm:text-base"> - {ranking}</span>
                         </div>
 
                         <div>
-                            <span className="text-gray-400 font-bold text-left">경력</span>
-                            <span className="text-black font-bold text-left"> - {career}년</span>
+                            <span className="text-gray-400 font-bold text-left text-xs sm:text-base">제출 / 정답률</span>
+                            <span
+                                className="text-black font-bold text-left text-xs sm:text-base"> - {submissionCount}번 / {correctPercent}%</span>
+                        </div>
+
+                        <div>
+                            <span className="text-gray-400 font-bold text-left text-xs sm:text-base">직군</span>
+                            <span className="text-black font-bold text-left text-xs sm:text-base"> - {position}</span>
+                        </div>
+
+                        <div>
+                            <span className="text-gray-400 font-bold text-left text-xs sm:text-base">경력</span>
+                            <span className="text-black font-bold text-left text-xs sm:text-base"> - {career}년</span>
                         </div>
 
                         <br/>
@@ -191,13 +192,13 @@ export default function Profile() {
                         <div className="flex justify-between">
             <span
                 onClick={() => navigate('/profile/submission', {state: {isCorrect: true}})}
-                className="text-gray-400 font-bold text-left cursor-pointer hover:underline"
+                className="text-gray-400 font-bold text-left cursor-pointer hover:underline text-xs sm:text-base"
             >
               해결한 문제
             </span>
                             <span
                                 onClick={() => navigate('/profile/submission', {state: {isCorrect: false}})}
-                                className="text-gray-400 font-bold text-right cursor-pointer hover:underline"
+                                className="text-gray-400 font-bold text-right cursor-pointer hover:underline text-xs sm:text-base"
                             >
               틀린 문제
             </span>
@@ -225,7 +226,7 @@ export default function Profile() {
                     className="bg-transparent
                                     border-2
                                     p-0
-                                    text-sm
+                                    text-xs sm:text-sm
                                     font-bold
                                     focus:outline-none focus:ring-0
                                     cursor-pointer
@@ -242,7 +243,7 @@ export default function Profile() {
                 </select>
             </div>
 
-            {error && <p className="text-red-600 text-sm mt-4 text-center">{error}</p>}
+            {error && <p className="text-red-600 text-xs sm:text-sm mt-4 text-center">{error}</p>}
         </div>
 
 

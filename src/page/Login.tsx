@@ -48,7 +48,7 @@ export default function Login() {
             className="bg-white text-gray-900 flex flex-col min-h-screen justify-start items-center pt-16 px-4 scale-105 sm:scale-110 transition-transform origin-top">
             {/* 로고 */}
             <h1
-                className="text-3xl sm:text-4xl md:text-6xl font-bold mb-8 text-blue-600 text-center cursor-pointer"
+                className="text-xl sm:text-3xl md:text-6xl font-bold mb-8 text-blue-600 text-center cursor-pointer"
                 onClick={() => navigate("/")}
             >
                 CS <span className="text-blue-500">Forever</span>
@@ -57,21 +57,21 @@ export default function Login() {
 
             {/* 로그인 폼 */}
             <div className="w-full max-w-md bg-gray-100 p-6 rounded-lg shadow mb-6">
-                <label className="block text-sm font-medium mb-2">이메일</label>
+                <label className="block text-xs sm:text-sm font-medium mb-2">이메일</label>
                 <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full p-3 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
+                    className="w-full p-3 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white text-xs sm:text-base"
                     placeholder="you@example.com"
                 />
 
-                <label className="block text-sm font-medium mb-2">비밀번호</label>
+                <label className="block text-xs sm:text-sm font-medium mb-2">비밀번호</label>
                 <input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full p-3 mb-6 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
+                    className="w-full p-3 mb-6 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white text-xs sm:text-base"
                     placeholder="••••••••"
                     onKeyDown={(e) => {
 
@@ -88,12 +88,12 @@ export default function Login() {
                 <button
                     onClick={handleLogin}
                     disabled={isLoading || email.trim() === '' || password.trim() === ''}
-                    className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition disabled:opacity-50 flex items-center justify-center"
+                    className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition disabled:opacity-50 flex items-center justify-center text-xs sm:text-base"
                 >
                     {isLoading ? (
                         <>
                             <Spinner/>
-                            로그인 중...
+                            <span className="ml-2">로그인 중...</span>
                         </>
                     ) : (
                         '로그인'
@@ -104,13 +104,13 @@ export default function Login() {
                 <div className="mt-2 flex justify-end w-full">
                     <button
                         onClick={() => navigate('/signup')}
-                        className="text-sm text-gray-500 hover:underline"
+                        className="text-xs sm:text-sm text-gray-500 hover:underline"
                     >
                         회원가입
                     </button>
                 </div>
 
-                {error && <p className="text-red-600 text-sm mt-4 text-center">{error}</p>}
+                {error && <p className="text-red-600 text-xs sm:text-sm mt-4 text-center">{error}</p>}
             </div>
         </div>
     );

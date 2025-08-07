@@ -17,14 +17,14 @@ export default function ProfileSubmissionDetail() {
     useEffect(() => {
         const token = localStorage.getItem('token');
         (!token) && navigate('/login');
-        (!question || !tag || !answer || !feedback) && navigate('/profile')
+        (!question || !tag) && navigate('/profile')
     }, [location.pathname]);
 
     return (
         <div
             className="bg-white text-gray-900 flex flex-col min-h-screen justify-start items-center pt-16 px-4 scale-105 sm:scale-110 transition-transform origin-top">
             <h1
-                className="text-3xl sm:text-4xl md:text-6xl font-bold mb-8 text-blue-600 text-center cursor-pointer"
+                className="text-xl sm:text-3xl md:text-6xl font-bold mb-8 text-blue-600 text-center cursor-pointer"
                 onClick={() => navigate("/")}
             >
                 CS <span className="text-blue-500">Forever</span>
@@ -52,18 +52,20 @@ export default function ProfileSubmissionDetail() {
 
                 <div className="flex justify-center">
                     <span className={`
-                        font-bold ${isCorrect ? 'text-blue-500' : 'text-red-500'}`}>
-                            [{tag}]
+                        px-2 py-1 rounded text-xs sm:text-sm text-white font-bold
+                        bg-blue-500
+                    `}>
+                        {tag}
                     </span>
                 </div>
 
                 <div className="flex justify-start">
-                    <span className="font-bold text-gray-500 text-sm">
-                        문제
+                    <span className="font-bold text-gray-500 text-xs sm:text-sm">
+                        문제:
                     </span>
                 </div>
                 <div className="flex justify-start">
-                    <span className="font-bold text-black text-sm whitespace-pre-line">
+                    <span className="font-bold text-black text-xs sm:text-sm whitespace-pre-line">
                         {question}
                     </span>
                 </div>
@@ -71,12 +73,12 @@ export default function ProfileSubmissionDetail() {
                 <br></br>
 
                 <div className="flex justify-start">
-                    <span className="font-bold text-gray-500 text-sm">
-                        답변
+                    <span className="font-bold text-gray-500 text-xs sm:text-sm">
+                        답안:
                     </span>
                 </div>
                 <div className="flex justify-start">
-                    <span className="font-bold text-black text-sm whitespace-pre-line">
+                    <span className="font-bold text-black text-xs sm:text-sm whitespace-pre-line">
                         {answer}
                     </span>
                 </div>
@@ -84,12 +86,12 @@ export default function ProfileSubmissionDetail() {
                 <br></br>
 
                 <div className="flex justify-start">
-                    <span className="font-bold text-gray-500 text-sm">
-                        피드백
+                    <span className="font-bold text-gray-500 text-xs sm:text-sm">
+                        피드백:
                     </span>
                 </div>
                 <div className="flex justify-start">
-                    <span className="font-bold text-black text-sm whitespace-pre-line">
+                    <span className="font-bold text-black text-xs sm:text-sm whitespace-pre-line">
                         {feedback}
                     </span>
                 </div>

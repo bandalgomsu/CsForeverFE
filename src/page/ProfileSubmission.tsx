@@ -73,7 +73,7 @@ export default function ProfileSubmission() {
         <div
             className="bg-white text-gray-900 flex flex-col min-h-screen justify-start items-center pt-16 px-4 scale-105 sm:scale-110 transition-transform origin-top">
             <h1
-                className="text-3xl sm:text-4xl md:text-6xl font-bold mb-8 text-blue-600 text-center cursor-pointer"
+                className="text-xl sm:text-3xl md:text-6xl font-bold mb-8 text-blue-600 text-center cursor-pointer"
                 onClick={() => navigate("/")}
             >
                 CS <span className="text-blue-500">Forever</span>
@@ -103,7 +103,7 @@ export default function ProfileSubmission() {
                             <span
                                 className={`
                                     absolute left-1/2 transform -translate-x-1/2
-                                    font-bold ${isCorrect ? 'text-blue-500' : 'text-red-500'}`}>
+                                    font-bold text-xs sm:text-base ${isCorrect ? 'text-blue-500' : 'text-red-500'}`}>
                                   {isCorrect ? "해결한 문제" : "틀린 문제"}
                             </span>
                             <span></span>
@@ -114,7 +114,7 @@ export default function ProfileSubmission() {
 
                         <div>
                             {page.map((data) => (
-                                <div key={data.submissionId} className="text-sm">
+                                <div key={data.submissionId} className="text-xs sm:text-sm">
                                     <p
                                         onClick={() =>
                                             navigate(`/profile/submission/detail`, {
@@ -160,7 +160,7 @@ export default function ProfileSubmission() {
                                     <button
                                         key={pageNum}
                                         onClick={() => setCurrentPage(pageNum)}
-                                        className={`focus:outline-none ${
+                                        className={`focus:outline-none text-xs sm:text-base ${
                                             pageNum === currentPage ? 'text-blue-400' : 'text-black'
                                         }`}
                                     >
@@ -179,7 +179,7 @@ export default function ProfileSubmission() {
                         </div>
                         <div className="flex justify-center gap-2 mt-4">
                             <span className="flex items-center gap-2">
-                              <label htmlFor="tag-select" className="text-sm text-gray-600"></label>
+                              <label htmlFor="tag-select" className="text-xs sm:text-sm text-gray-600"></label>
                               <select
                                   id="tag-select"
                                   value={selectedTag}
@@ -191,7 +191,7 @@ export default function ProfileSubmission() {
                                     bg-transparent
                                     border-2
                                     p-0
-                                    text-sm 
+                                    text-xs sm:text-sm
                                     ${isCorrect ? 'text-blue-500' : 'text-red-500'}
                                     font-bold
                                     focus:outline-none focus:ring-0
@@ -212,7 +212,7 @@ export default function ProfileSubmission() {
                 )}
             </div>
 
-            {error && <p className="text-red-600 text-sm mt-4 text-center">{error}</p>}
+            {error && <p className="text-red-600 text-xs sm:text-sm mt-4 text-center">{error}</p>}
         </div>
     );
 

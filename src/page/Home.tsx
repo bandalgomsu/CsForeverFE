@@ -170,11 +170,11 @@ export function Home() {
 
     return (
         <div
-            className="bg-white text-gray-900 flex flex-col min-h-screen justify-start items-center pt-16 px-4 scale-105 sm:scale-110 transition-transform origin-top">
+            className="bg-white text-gray-900 flex flex-col min-h-screen justify-start items-center pt-8 sm:pt-16 px-3 sm:px-4 scale-100 sm:scale-105 md:scale-110 transition-transform origin-top">
 
             {/* 로고 */}
             <h1
-                className="text-3xl sm:text-4xl md:text-6xl font-bold mb-8 text-blue-600 text-center cursor-pointer"
+                className="text-xl sm:text-3xl md:text-6xl font-bold mb-6 sm:mb-8 text-blue-600 text-center cursor-pointer touch-manipulation"
                 onClick={() => navigate("/")}
             >
                 CS <span className="text-blue-500">Forever</span>
@@ -182,7 +182,7 @@ export function Home() {
 
 
             {/* 태그 선택 */}
-            <div className="grid grid-cols-5 gap-3 mb-8 w-full max-w-xl">
+            <div className="grid grid-cols-5 gap-1 sm:gap-2 md:gap-3 mb-6 sm:mb-8 w-full max-w-xl">
                 {TAGS.map((tag) => {
                     const isSelected = selectedTags.includes(tag);
                     return (
@@ -190,8 +190,9 @@ export function Home() {
                             key={tag}
                             onClick={() => toggleTag(tag)}
                             className={`
-                            group min-w-0 w-full h-10 px-2 relative
+                            group min-w-0 w-full h-12 sm:h-10 px-1 sm:px-2 relative
                             flex items-center justify-center bg-transparent rounded-none
+                            touch-manipulation min-h-[44px]
                             after:content-[''] after:absolute after:left-0 after:right-0 after:bottom-1
                             after:h-[2px] after:rounded-full
                             ${isSelected
@@ -201,8 +202,8 @@ export function Home() {
                         >
                             <span
                                 className={`
-                                    text-[9px] sm:text-[10px] md:text-xs lg:text-sm
-                                    text-center font-bold break-words leading-tight px-1
+                                    text-[8px] sm:text-xs md:text-sm lg:text-base
+                                    text-center font-bold break-words leading-tight px-0.5 sm:px-1
                                     ${isSelected ? 'text-blue-600' : 'text-gray-700'}
                                 `}
                             >
@@ -217,12 +218,12 @@ export function Home() {
 
             {/* 문제 박스 */}
             {showQuestionBox && (
-                <div className="w-full max-w-xl bg-gray-100 p-6 rounded-lg shadow mb-6">
-                    <p className="text-base sm:text-lg font-semibold mb-4">
+                <div className="w-full max-w-xl bg-gray-100 p-4 sm:p-6 rounded-lg shadow mb-4 sm:mb-6">
+                    <p className="text-xs sm:text-base lg:text-lg font-semibold mb-3 sm:mb-4">
                         {isSolution ? <CircleCheck className="inline align-middle mr-2 text-blue-600"/> : null}
                         문제: {question}
                         <span
-                            className="cursor-pointer hover:underline font-bold text-red-600"
+                            className="cursor-pointer hover:underline font-bold text-red-600 touch-manipulation ml-2"
                             onClick={handleGetBestAnswer}>[답안 보기]
                         </span>
                     </p>
@@ -231,7 +232,7 @@ export function Home() {
                         value={answer}
                         onChange={(e) => setAnswer(e.target.value)}
                         placeholder="정답을 입력하세요... (최소 10글자 / 최대 300글자)"
-                        className="w-full h-32 p-3 border border-gray-300 rounded mb-4 resize-none focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
+                        className="w-full h-32 p-3 border border-gray-300 rounded mb-4 resize-none focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white text-xs sm:text-base"
                         onKeyDown={(e) => {
                             if (e.key === 'Enter' && !e.shiftKey) {
                                 e.preventDefault(); // 기본 줄바꿈 방지
@@ -243,62 +244,64 @@ export function Home() {
                     />
 
                     {showResultBox && (
-                        <div className="mt-6 mb-4 bg-white border border-gray-300 rounded p-4 shadow-sm">
+                        <div
+                            className="mt-4 sm:mt-6 mb-3 sm:mb-4 bg-white border border-gray-300 rounded p-3 sm:p-4 shadow-sm">
                             <p className="mb-2 font-semibold">
                                 <span className={isCorrect ? 'text-blue-600' : 'text-red-600'}>
                                     {isCorrect ? '정답 !' : '오답 !'}
                                  </span>
                             </p>
-                            <p className="text-sm sm:text-base text-gray-700 whitespace-pre-line">
+                            <p className="text-xs sm:text-sm lg:text-base text-gray-700 whitespace-pre-line">
                                 <span className="font-semibold"> - 정답 해설 - </span>
                                 <p>{feedback}</p>
                             </p>
                         </div>
                     )}
                     {showResultBox && (
-                        <div className="mt-6 mb-4 bg-white border border-gray-300 rounded p-4 shadow-sm">
-                            <p className="inline-flex items-center gap-2 mb-3">
-                                <span className="text-xs">용어 검색 </span>
-                                <input
-                                    type="text"
-                                    className="h-6 w-20 text-xs p-1 border border-gray-300 bg-white rounded"
-                                    placeholder="최대 30자"
-                                    value={term}
-                                    onChange={(e) => setTerm(e.target.value)}
-                                    onKeyDown={(e) => {
-                                        if (e.key === 'Enter' && !e.shiftKey) {
-                                            e.preventDefault(); // 기본 줄바꿈 방지
-                                            if (!(isLoading || isGetTermDefinitionLoading || term.trim().length < 1 || term.trim().length > 30)) {
-                                                handleGetTermDefinition();
+                        <div
+                            className="mt-4 sm:mt-6 mb-3 sm:mb-4 bg-white border border-gray-300 rounded p-3 sm:p-4 shadow-sm">
+                            <p className="flex flex-col sm:inline-flex sm:flex-row items-start sm:items-center gap-2 mb-3">
+                                <span className="text-xs sm:text-sm">용어 검색 </span>
+                                <div className="flex items-center gap-2 w-full sm:w-auto">
+                                    <input
+                                        type="text"
+                                        className="h-8 sm:h-6 w-full sm:w-20 text-xs p-1 border border-gray-300 bg-white rounded"
+                                        placeholder="최대 30자"
+                                        value={term}
+                                        onChange={(e) => setTerm(e.target.value)}
+                                        onKeyDown={(e) => {
+                                            if (e.key === 'Enter') {
+                                                e.preventDefault();
+                                                if (!(isLoading || isGetTermDefinitionLoading || term.trim().length < 1 || term.trim().length > 30)) {
+                                                    handleGetTermDefinition();
+                                                }
                                             }
-                                        }
-                                    }}
-                                />
-                                <button
-                                    className="bg-blue-500 px-1 text-white rounded hover:bg-blue-600 transition disabled:opacity-50 flex items-center justify-center"
-                                    onClick={handleGetTermDefinition}
-                                    disabled={isLoading || isGetTermDefinitionLoading || term.trim().length < 1 || term.trim().length > 30}
-                                >
-                                    {isGetTermDefinitionLoading ? (
-                                        <>
+                                        }}
+                                    />
+                                    <button
+                                        className="bg-blue-500 px-2 sm:px-1 py-1 text-white rounded hover:bg-blue-600 transition disabled:opacity-50 flex items-center justify-center min-h-[44px] sm:min-h-0 touch-manipulation"
+                                        onClick={handleGetTermDefinition}
+                                        disabled={isLoading || isGetTermDefinitionLoading || term.trim().length < 1 || term.trim().length > 30}
+                                    >
+                                        {isGetTermDefinitionLoading ? (
                                             <Spinner/>
-                                        </>
-                                    ) : (
-                                        <Search size={18}/>
-                                    )}
-                                </button>
+                                        ) : (
+                                            <Search size={16}/>
+                                        )}
+                                    </button>
+                                </div>
                             </p>
                             {termDefinition != '' && (
-                                <p className="text-sm sm:text-base text-gray-700 whitespace-pre-line">
+                                <p className="text-xs sm:text-sm lg:text-base text-gray-700 whitespace-pre-line">
                                     <p>{termDefinition}</p>
                                 </p>
                             )}
                         </div>
                     )}
-                    <div className="flex justify-between">
+                    <div className="flex flex-col sm:flex-row justify-between gap-3 sm:gap-0">
                         {/* 다른 문제 버튼 */}
                         <button
-                            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition disabled:opacity-50 flex items-center justify-center"
+                            className="bg-blue-500 text-white px-4 py-3 sm:py-2 rounded hover:bg-blue-600 transition disabled:opacity-50 flex items-center justify-center min-h-[44px] touch-manipulation text-xs sm:text-base"
                             onClick={handleGetQuestionReLoad}
                             disabled={isLoading || isGetQuestionReLoading || selectedTags.length == 0}
                         >
@@ -313,7 +316,7 @@ export function Home() {
 
                         {/* 정답 제출 버튼 */}
                         <button
-                            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition disabled:opacity-50 flex items-center justify-center"
+                            className="bg-blue-500 text-white px-4 py-3 sm:py-2 rounded hover:bg-blue-600 transition disabled:opacity-50 flex items-center justify-center min-h-[44px] touch-manipulation text-xs sm:text-base"
                             onClick={handleSubmitCheck}
                             disabled={isLoading || isCheckLoading || answer.trim().length < 10}
                         >
@@ -331,7 +334,7 @@ export function Home() {
 
             {/* 문제 풀기 버튼 */}
             <button
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition disabled:opacity-50 flex items-center justify-center"
+                className="bg-blue-500 text-white px-4 py-3 sm:py-2 rounded hover:bg-blue-600 transition disabled:opacity-50 flex items-center justify-center min-h-[44px] touch-manipulation text-xs sm:text-base"
                 onClick={async () => {
                     await handleGetQuestion();
                 }}
@@ -346,7 +349,7 @@ export function Home() {
                 )}
             </button>
 
-            <p className="text-center text-red-600 text-xl font-bold">{error}</p>
+            <p className="text-center text-red-600 text-sm sm:text-xl font-bold px-2">{error}</p>
         </div>
     );
 }

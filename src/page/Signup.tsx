@@ -119,7 +119,7 @@ export default function Signup() {
         <div
             className="bg-white text-gray-900 flex flex-col min-h-screen justify-start items-center pt-16 px-4 scale-105 sm:scale-110 transition-transform origin-top">
             <h1
-                className="text-3xl sm:text-4xl md:text-6xl font-bold mb-8 text-blue-600 text-center cursor-pointer"
+                className="text-xl sm:text-3xl md:text-6xl font-bold mb-8 text-blue-600 text-center cursor-pointer"
                 onClick={() => navigate("/")}
             >
                 CS <span className="text-blue-500">Forever</span>
@@ -127,28 +127,28 @@ export default function Signup() {
 
             <div className="w-full max-w-md bg-gray-100 p-6 rounded-lg shadow mb-6">
                 {/* 닉네임 */}
-                <label className="block text-sm font-medium mb-2">닉네임</label>
+                <label className="block text-xs sm:text-sm font-medium mb-2">닉네임</label>
                 <input
                     value={nickname}
                     onChange={(e) => setNickname(e.target.value)}
-                    className="w-full p-3 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
+                    className="w-full p-3 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white text-xs sm:text-base"
                     placeholder="닉네임을 입력하세요 (최대 20자)"
                 />
 
                 {/* 이메일 + 인증번호 전송 */}
-                <label className="block text-sm font-medium mb-2">이메일</label>
+                <label className="block text-xs sm:text-sm font-medium mb-2">이메일</label>
                 <div className="flex flex-wrap gap-2 mb-4">
                     <input
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="flex-1 min-w-0 h-10 px-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white text-sm"
+                        className="flex-1 min-w-0 h-10 px-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white text-xs sm:text-sm"
                         placeholder="you@example.com"
                         disabled={isVerified === true}
                     />
                     <button
                         onClick={handleSendVerificationCode}
-                        className={`h-10 px-3 rounded text-sm shrink-0 transition 
+                        className={`h-10 px-3 rounded text-xs sm:text-sm shrink-0 transition 
         ${isVerified === true || (resendCooldown && resendCooldown > 0) || email.trim() === ''
                             ? 'bg-gray-400 text-white cursor-default'
                             : 'bg-blue-500 text-white hover:bg-blue-600'}
@@ -178,13 +178,13 @@ export default function Signup() {
                             <input
                                 value={verificationCode}
                                 onChange={(e) => setVerificationCode(e.target.value)}
-                                className="flex-1 min-w-0 h-10 px-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white text-sm"
+                                className="flex-1 min-w-0 h-10 px-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white text-xs sm:text-sm"
                                 placeholder="인증번호 입력"
                                 disabled={isVerified === true}
                             />
                             <button
                                 onClick={handleVerifyCode}
-                                className={`h-10 px-3 rounded text-sm shrink-0 transition 
+                                className={`h-10 px-3 rounded text-xs sm:text-sm shrink-0 transition 
                                     ${isVerified === true
                                     ? 'bg-gray-400 text-white cursor-default'
                                     : 'bg-green-500 text-white hover:bg-green-600'}
@@ -201,12 +201,12 @@ export default function Signup() {
 
                         {authExpireTime !== null && (
                             authExpireTime > 0 ? (
-                                <p className="text-xs text-gray-500 mb-2">
+                                <p className="text-xs sm:text-xs text-gray-500 mb-2">
                                     인증 유효
                                     시간: {`${String(Math.floor(authExpireTime / 60)).padStart(2, '0')}:${String(authExpireTime % 60).padStart(2, '0')}`}
                                 </p>
                             ) : (
-                                <p className="text-xs text-red-500 mb-2">
+                                <p className="text-xs sm:text-xs text-red-500 mb-2">
                                     시간이 만료되었습니다. 인증번호를 다시 요청해주세요.
                                 </p>
                             )
@@ -215,31 +215,31 @@ export default function Signup() {
                 )}
 
                 {/* 비밀번호 */}
-                <label className="block text-sm font-medium mb-2">비밀번호</label>
+                <label className="block text-xs sm:text-sm font-medium mb-2">비밀번호</label>
                 <input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full p-3 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
+                    className="w-full p-3 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white text-xs sm:text-base"
                     placeholder="비밀번호"
                 />
 
                 {/* 비밀번호 확인 */}
-                <label className="block text-sm font-medium mb-2">비밀번호 확인</label>
+                <label className="block text-xs sm:text-sm font-medium mb-2">비밀번호 확인</label>
                 <input
                     type="password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="w-full p-3 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
+                    className="w-full p-3 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white text-xs sm:text-base"
                     placeholder="비밀번호 확인"
                 />
 
                 {/* 년차 */}
-                <label className="block text-sm font-medium mb-2">년차</label>
+                <label className="block text-xs sm:text-sm font-medium mb-2">년차</label>
                 <select
                     value={career}
                     onChange={(e) => setCareer(e.target.value)}
-                    className="w-full p-3 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
+                    className="w-full p-3 mb-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white text-xs sm:text-base"
                 >
                     <option value="">선택하세요</option>
                     {Object.entries(CareerToEnumMap).map(([label, value]) => (
@@ -250,11 +250,11 @@ export default function Signup() {
                 </select>
 
                 {/* 선호 직군 */}
-                <label className="block text-sm font-medium mb-2">직군</label>
+                <label className="block text-xs sm:text-sm font-medium mb-2">직군</label>
                 <select
                     value={position}
                     onChange={(e) => setPosition(e.target.value)}
-                    className="w-full p-3 mb-6 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
+                    className="w-full p-3 mb-6 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white text-xs sm:text-base"
                     onKeyDown={(e) => {
                         if (e.key === 'Enter' && !isSignupDisabled) handleSignup();
                     }}
@@ -271,7 +271,7 @@ export default function Signup() {
                 <button
                     onClick={handleSignup}
                     disabled={isSignupDisabled}
-                    className={`w-full py-2 rounded transition flex items-center justify-center
+                    className={`w-full py-2 rounded transition flex items-center justify-center text-xs sm:text-base
                     ${isSignupDisabled
                         ? 'bg-gray-400 text-white cursor-not-allowed'
                         : 'bg-blue-500 text-white hover:bg-blue-600'}
@@ -281,7 +281,7 @@ export default function Signup() {
                 </button>
 
 
-                {error && <p className="text-red-600 text-sm mt-4 text-center">{error}</p>}
+                {error && <p className="text-red-600 text-xs sm:text-sm mt-4 text-center">{error}</p>}
             </div>
         </div>
     );

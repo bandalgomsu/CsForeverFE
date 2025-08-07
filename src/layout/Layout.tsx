@@ -9,7 +9,7 @@ export default function Layout() {
     useEffect(() => {
         const token = localStorage.getItem('token');
         setIsLoggedIn(!!token);
-    }, [location.pathname, isLoggedIn]); // 경로가 바뀔 때마다 토큰 다시 확인
+    }, [location.pathname, isLoggedIn]);
 
     const handleClick = () => {
         if (isLoggedIn) {
@@ -55,41 +55,51 @@ export default function Layout() {
     return (
         <div className="min-h-screen flex flex-col">
             {/* 헤더 */}
-            <header className="flex justify-end items-center px-6 py-4">
+            <header className="flex justify-end items-center px-4 sm:px-6 py-3 sm:py-4">
                 <div
                     onClick={handleClick}
-                    className="cursor-pointer text-gray-600 hover:underline"
+                    className="cursor-pointer text-gray-600 hover:underline text-sm sm:text-base
+                             min-h-[44px] flex items-center px-2 py-1 touch-manipulation"
                 >
                     {isLoggedIn ? '내 정보' : '로그인'}
                 </div>
             </header>
 
             {/* 페이지 컨텐츠 */}
-            <main className="flex-1 px-4 py-8">
+            <main className="flex-1 px-3 sm:px-4 py-6 sm:py-8">
                 <Outlet/>
             </main>
 
             <br></br>
             {/* 푸터 */}
-            <footer className="text-center text-sm text-gray-600 py-4">
-                <div>
-                    Contact : <a href="mailto:maildevgogo@gmail.com" className="underline">maildevgogo@gmail.com</a>
+            <footer className="text-center text-xs sm:text-sm text-gray-600 py-3 sm:py-4 px-3">
+                <div className="mb-2 sm:mb-0">
+                    Contact :
+                    <a
+                        href="mailto:maildevgogo@gmail.com"
+                        className="underline ml-1 break-all"
+                    >
+                        maildevgogo@gmail.com
+                    </a>
                 </div>
                 <div
                     onClick={() => navigate("/app-policy")}
-                    className="mt-2 hover:underline cursor-pointer"
-                >개인정보 처리 방침
+                    className="mt-2 hover:underline cursor-pointer min-h-[44px]
+                             flex items-center justify-center touch-manipulation py-1"
+                >
+                    개인정보 처리 방침
                 </div>
-
 
                 {isLoggedIn && (
                     <div
                         onClick={() => handleLogout()}
-                        className="mt-2 hover:underline cursor-pointer"
-                    >로그아웃</div>
+                        className="mt-2 hover:underline cursor-pointer min-h-[44px]
+                                 flex items-center justify-center touch-manipulation py-1"
+                    >
+                        로그아웃
+                    </div>
                 )}
             </footer>
-
         </div>
     );
 }
