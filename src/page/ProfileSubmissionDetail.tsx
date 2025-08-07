@@ -53,7 +53,7 @@ export default function ProfileSubmissionDetail() {
                 <div className="flex justify-center">
                     <span className={`
                         px-2 py-1 rounded text-xs sm:text-sm text-white font-bold
-                        bg-blue-500
+                        ${isCorrect ? 'bg-blue-500' : 'bg-red-500'}
                     `}>
                         {tag}
                     </span>
