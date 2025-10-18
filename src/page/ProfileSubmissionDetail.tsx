@@ -58,42 +58,51 @@ export default function ProfileSubmissionDetail() {
                         {tag}
                     </span>
                 </div>
-
-                <div className="flex justify-start">
+                <br></br>
+                <div className="flex justify-center">
                     <span className="font-bold text-gray-500 text-xs sm:text-sm">
                         문제:
                     </span>
                 </div>
                 <div className="flex justify-start">
-                    <span className="font-bold text-black text-xs sm:text-sm whitespace-pre-line">
-                        {question}
-                    </span>
+                    <textarea
+                        className="bg-white w-full p-2 border border-white-300 rounded-lg text-xs sm:text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        rows={5}
+                        value={question}
+                        disabled={true}
+                    />
                 </div>
 
                 <br></br>
 
-                <div className="flex justify-start">
+                <div className="flex justify-center">
                     <span className="font-bold text-gray-500 text-xs sm:text-sm">
-                        답안:
+                        답안
                     </span>
                 </div>
-                <div className="flex justify-start">
-                    <span className="font-bold text-black text-xs sm:text-sm whitespace-pre-line">
-                        {answer}
-                    </span>
+                <div className="flex justify-start w-full">
+                    <textarea
+                        className="bg-white w-full p-2 border border-white-300 rounded-lg text-xs sm:text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        rows={5}
+                        value={answer}
+                        disabled={true}
+                    />
                 </div>
 
                 <br></br>
 
-                <div className="flex justify-start">
+                <div className="flex justify-center">
                     <span className="font-bold text-gray-500 text-xs sm:text-sm">
-                        피드백:
+                        피드백
                     </span>
                 </div>
-                <div className="flex justify-start">
-                    <span className="font-bold text-black text-xs sm:text-sm whitespace-pre-line">
-                        {feedback}
-                    </span>
+                <div className="flex justify-start w-full">
+                    <textarea
+                        className="bg-white w-full p-2 border border-white-300 rounded-lg text-xs sm:text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        rows={5}
+                        value={feedback}
+                        disabled={true}
+                    />
                 </div>
 
             </div>

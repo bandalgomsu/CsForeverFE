@@ -57,6 +57,14 @@ export default function Layout() {
             {/* 헤더 */}
             <header className="flex justify-end items-center px-4 sm:px-6 py-3 sm:py-4">
                 <div
+                    onClick={() => navigate('/donation')}
+                    className="cursor-pointer text-gray-600 hover:underline text-sm sm:text-base
+                             min-h-[44px] flex items-center px-2 py-1 touch-manipulation"
+                >
+                    CS 기부
+                </div>
+
+                <div
                     onClick={handleClick}
                     className="cursor-pointer text-gray-600 hover:underline text-sm sm:text-base
                              min-h-[44px] flex items-center px-2 py-1 touch-manipulation"
