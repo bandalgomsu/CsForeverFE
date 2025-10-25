@@ -167,7 +167,8 @@ export function Question() {
                 <div className="w-full max-w-xl bg-gray-100 p-4 sm:p-6 rounded-lg shadow mb-4 sm:mb-6">
 
                     <p className="text-xs sm:text-base lg:text-lg font-semibold mb-3 sm:mb-4 flex justify-between">
-                         <span onClick={() => navigate(`/question?page=${currentPage}&tag=${tag}`)}>
+                         <span
+                             onClick={() => navigate(`/question?page=${encodeURIComponent(currentPage)}&tag=${encodeURIComponent(tag)}`)}>
                               <ArrowLeft className="hover:underline cursor-pointer"/>
                          </span>
 

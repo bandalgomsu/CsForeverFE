@@ -22,7 +22,7 @@ export default function QuestionPage() {
     const location = useLocation();
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const [currentPage, setCurrentPage] = useState(parseInt(searchParams.get('page') ?? '1'));
+    const [currentPage, setCurrentPage] = useState(parseInt(decodeURIComponent(searchParams.get('page') ?? '1')));
     const [page, setPage] = useState<Question[]>([]);
     const [totalPages, setTotalPages] = useState(1);
     const pageSize = 15;
@@ -35,7 +35,7 @@ export default function QuestionPage() {
     const [isLoading, setIsLoading] = useState<boolean | null>(null);
     const [error, setError] = useState<string | null>(null);
 
-    const [selectedTag, setSelectedTag] = useState<string>(searchParams.get('tag') ?? '');
+    const [selectedTag, setSelectedTag] = useState<string>(decodeURIComponent(searchParams.get('tag') ?? ''));
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -55,7 +55,9 @@ export default function QuestionPage() {
             setIsLoading(true);
 
             if (selectedTag != '') {
-                const res = await api.get(`/api/v1/questions?tag=${TagToEnumMap[selectedTag]}&page=${currentPage}&size=${pageSize}`);
+                const res = await api.get(
+                    `/api/v1/questions?tag=${encodeURIComponent(TagToEnumMap[selectedTag])}&page=${encodeURIComponent(currentPage)}&size=${encodeURIComponent(pageSize)}`
+                );
 
                 setPage(res.data.results);
                 setSearchParams({page: res.data.currentPage.toString(), tag: selectedTag});
@@ -115,7 +117,7 @@ export default function QuestionPage() {
                                 <div key={data.submissionId} className="text-xs sm:text-sm">
                                     <p
                                         onClick={() =>
-                                            navigate(`/question/${data.questionId}`, {
+                                            navigate(`/question/${encodeURIComponent(data.questionId)}`, {
                                                 state: {
                                                     page: currentPage,
                                                     tag: selectedTag
