@@ -14,6 +14,8 @@ import ProfileEdit from "./page/ProfileEdit.tsx";
 import Donation from "./page/Donation.tsx";
 import DonationDetail from "./page/DonationDetail.tsx";
 import DonationSubmit from "./page/DonationSubmit.tsx";
+import QuestionPage from "./page/QuestionPage.tsx";
+import Question from "./page/Question.tsx";
 
 export const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
@@ -32,6 +34,8 @@ createRoot(document.getElementById('root')!).render(
                     <Route path="donation" element={<Donation/>}/>
                     <Route path="donation/:donationId" element={<DonationDetail/>}/>
                     <Route path="donation/submit" element={<DonationSubmit/>}/>
+                    <Route path="question" element={<QuestionPage/>}/>
+                    <Route path="question/:questionId" element={<Question/>}/>
                     <Route path="app-policy" element={<AppPolicy/>}/>
                 </Route>
             </Routes>

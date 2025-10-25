@@ -1,24 +1,28 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {TagToEnumMap} from "../utill/MapUtill.tsx";
 import {Spinner} from "../utill/Spinner.tsx";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import api from "../axios/Axios.tsx";
-import {CircleCheck, Search} from "lucide-react";
+import {ArrowLeft, CircleCheck, Search} from "lucide-react";
 
 
 // const TAGS = ['Spring', 'NodeJS', "ASP.Net", 'React', 'RDB', 'NoSql', "Java", "C#", "JavaScript", 'OS', 'Algorithm', 'Data Structure', 'Network', "Design Pattern", "SW Engineering", "DevOps"];
 
 const TAGS = Object.keys(TagToEnumMap);
 
-export function Home() {
+export function Question() {
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const {questionId} = useParams<{ questionId: string }>();
+    const currentPage = location.state.page ?? 1;
+    const tag = location.state.tag ?? '';
 
     const [selectedTags, setSelectedTags] = useState<string[]>([]);
     const [showQuestionBox, setShowQuestionBox] = useState(false);
     const [answer, setAnswer] = useState('');
     const [question, setQuestion] = useState('');
     const [feedback, setFeedback] = useState('');
-    const [questionId, setQuestionId] = useState(0);
     const [showResultBox, setShowResultBox] = useState(false);
 
     const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
@@ -35,11 +39,18 @@ export function Home() {
     const [isGetQuestionLoading, setIsGetQuestionLoading] = useState(false);
     const [isGetQuestionReLoading, setIsGetQuestionReLoading] = useState(false);
 
-    const toggleTag = (tag: string) => {
-        setSelectedTags((prev) =>
-            prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
-        );
-    };
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        !token && navigate('/login');
+
+        const fetch = async () => {
+            await handleGetQuestion()
+        }
+        fetch()
+
+        setError("");
+
+    }, [location.pathname]);
 
     const handleSubmitCheck = async () => {
         setIsLoading(true)
@@ -100,11 +111,9 @@ export function Home() {
         setIsGetQuestionLoading(true);// 로딩 시작
 
         try {
-            const tags = selectedTags.map(tag => encodeURIComponent(TagToEnumMap[tag]));
-            const res = await api.get(`/api/v1/questions/random?tags=${tags.join(',')}`);
+            const res = await api.get(`/api/v1/questions/${questionId}`);
             const data = res.data
             setQuestion(data.question);
-            setQuestionId(data.questionId);
 
             setError("")
             setShowQuestionBox(true);
@@ -118,33 +127,6 @@ export function Home() {
             setError('문제를 불러오는 중 오류가 발생했습니다. 잠시 후 다시 시도 해주세요.');
         } finally {
             setIsGetQuestionLoading(false);
-            setIsLoading(false)
-        }
-    };
-
-    const handleGetQuestionReLoad = async () => {
-        setIsLoading(true)
-        setIsGetQuestionReLoading(true);// 로딩 시작
-
-        try {
-            const tags = selectedTags.map(tag => encodeURIComponent(TagToEnumMap[tag]));
-            const res = await api.get(`/api/v1/questions/random?tags=${tags.join(',')}`)
-            const data = res.data
-            setQuestion(data.question);
-            setQuestionId(data.questionId);
-
-            setError("")
-            setShowQuestionBox(true);
-            setShowResultBox(false);
-            setAnswer('');
-            setTerm('');
-            setTermDefinition('');
-
-            setIsSolution(data.isSolution)
-        } catch (error) {
-            setError('문제를 불러오는 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
-        } finally {
-            setIsGetQuestionReLoading(false);
             setIsLoading(false)
         }
     };
@@ -180,48 +162,20 @@ export function Home() {
                 CS <span className="text-blue-500">Forever</span>
             </h1>
 
-
-            {/* 태그 선택 */}
-            <div className="grid grid-cols-5 gap-1 sm:gap-2 md:gap-3 mb-6 sm:mb-8 w-full max-w-xl">
-                {TAGS.map((tag) => {
-                    const isSelected = selectedTags.includes(tag);
-                    return (
-                        <button
-                            key={tag}
-                            onClick={() => toggleTag(tag)}
-                            className={`
-                            group min-w-0 w-full h-12 sm:h-10 px-1 sm:px-2 relative
-                            flex items-center justify-center bg-transparent rounded-none
-                            touch-manipulation min-h-[44px]
-                            after:content-[''] after:absolute after:left-0 after:right-0 after:bottom-1
-                            after:h-[2px] after:rounded-full
-                            ${isSelected
-                                ? 'after:bg-blue-600'
-                                : 'after:bg-gray-300 group-hover:after:bg-gray-400'}
-                            `}
-                        >
-                            <span
-                                className={`
-                                    text-[8px] sm:text-xs md:text-sm lg:text-base
-                                    text-center font-bold break-words leading-tight px-0.5 sm:px-1
-                                    ${isSelected ? 'text-blue-600' : 'text-gray-700'}
-                                `}
-                            >
-                                {tag}
-                            </span>
-                        </button>
-
-                    );
-                })}
-            </div>
-
-
             {/* 문제 박스 */}
             {showQuestionBox && (
                 <div className="w-full max-w-xl bg-gray-100 p-4 sm:p-6 rounded-lg shadow mb-4 sm:mb-6">
-                    <p className="text-xs sm:text-base lg:text-lg font-semibold mb-3 sm:mb-4">
+
+                    <p className="text-xs sm:text-base lg:text-lg font-semibold mb-3 sm:mb-4 flex justify-between">
+                         <span onClick={() => navigate(`/question?page=${currentPage}&tag=${tag}`)}>
+                              <ArrowLeft className="hover:underline cursor-pointer"/>
+                         </span>
+
+                        <span>
                         {isSolution ? <CircleCheck className="inline align-middle mr-2 text-blue-600"/> : null}
-                        문제: {question}
+                            문제: {question}
+                        </span>
+
                         <span
                             className="cursor-pointer hover:underline font-bold text-red-600 touch-manipulation ml-2"
                             onClick={handleGetBestAnswer}>[답안 보기]
@@ -299,20 +253,7 @@ export function Home() {
                         </div>
                     )}
                     <div className="flex flex-col sm:flex-row justify-between gap-3 sm:gap-0">
-                        {/* 다른 문제 버튼 */}
-                        <button
-                            className="bg-blue-500 text-white px-4 py-3 sm:py-2 rounded hover:bg-blue-600 transition disabled:opacity-50 flex items-center justify-center min-h-[44px] touch-manipulation text-xs sm:text-base"
-                            onClick={handleGetQuestionReLoad}
-                            disabled={isLoading || isGetQuestionReLoading || selectedTags.length == 0}
-                        >
-                            {isGetQuestionReLoading ? (
-                                <>
-                                    <Spinner/>
-                                </>
-                            ) : (
-                                '다른 문제'
-                            )}
-                        </button>
+                        <span></span>
 
                         {/* 정답 제출 버튼 */}
                         <button
@@ -332,26 +273,9 @@ export function Home() {
                 </div>
             )}
 
-            {/* 문제 풀기 버튼 */}
-            <button
-                className="bg-blue-500 text-white px-4 py-3 sm:py-2 rounded hover:bg-blue-600 transition disabled:opacity-50 flex items-center justify-center min-h-[44px] touch-manipulation text-xs sm:text-base"
-                onClick={async () => {
-                    await handleGetQuestion();
-                }}
-                disabled={isLoading || isGetQuestionLoading || selectedTags.length == 0}
-            >
-                {isGetQuestionLoading ? (
-                    <>
-                        <Spinner/>
-                    </>
-                ) : (
-                    '문제 풀기'
-                )}
-            </button>
-
             <p className="text-center text-red-600 text-sm sm:text-xl font-bold px-2">{error}</p>
         </div>
     );
 }
 
-export default Home;
+export default Question;
